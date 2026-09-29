@@ -21,8 +21,7 @@ $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    "apikey: $SUPABASE_ANON",
-    "Authorization: Bearer $SUPABASE_ANON"
+    "apikey: $SUPABASE_ANON"
 ]);
 $data = curl_exec($ch);
 $curlError = curl_error($ch);
