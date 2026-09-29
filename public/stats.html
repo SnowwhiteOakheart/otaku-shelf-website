@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="de" class="no-js">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a14">
+    <meta name="description"
+        content="Otaku Shelf – Code- & Datenbank-Statistiken. Nerd-Statistiken zur App-Entwicklung.">
+    <meta name="description" lang="en"
+        content="Otaku Shelf – Code & Database Statistics. Developer statistics for the app.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Otaku Shelf – Code- & Datenbank-Statistiken">
+    <meta property="og:description"
+        content="Ein Blick hinter die Kulissen: Zeilen Code, Datenbanktabellen und Entwicklungs-Statistiken für Otaku Shelf.">
+    <meta property="og:image" content="https://www.otaku-shelf.info/images/banner.jpg">
+    <meta property="og:url" content="https://www.otaku-shelf.info/stats.html">
+    <meta property="og:type" content="website">
+
+    <link rel="canonical" href="https://www.otaku-shelf.info/stats.html">
+
+    <title data-i18n="title">Otaku Shelf – Entwickler-Statistiken</title>
+
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <script>document.documentElement.classList.replace('no-js', 'js');</script>
+
+    <style>
+        /* ============================================================
+           1. DESIGN TOKENS
+           ============================================================ */
+        :root {
+            --primary: #8b5cf6;
+            --primary-deep: #6a0dad;
+            --primary-glow: #a78bfa;
+            --accent: #06b6d4;
+            --accent-glow: #22d3ee;
+            --premium: #f59e0b;
+            --supporter: #ec4899;
+
+            --bg: #0a0a14;
+            --bg-elev: #11111e;
+            --surface: #181828;
+            --surface-2: #1f1f33;
+            --border: rgba(139, 92, 246, 0.18);
+            --border-strong: rgba(139, 92, 246, 0.45);
+
+            --text: #ececf5;
+            --text-muted: #9292ac;
+            --text-soft: #6f6f88;
+
+            --font-display: 'Orbitron', system-ui, sans-serif;
+            --font-body: 'Manrope', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+            --container: 1200px;
+            --container-narrow: 880px;
+            --radius-sm: 8px;
+            --radius: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+
+            --shadow-glow-primary: 0 0 0 1px rgba(139, 92, 246, .2),
+                0 8px 30px -8px rgba(139, 92, 246, .45);
+            --shadow-glow-accent: 0 0 0 1px rgba(6, 182, 212, .2),
+                0 8px 30px -8px rgba(6, 182, 212, .45);
+
+            --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+            --ease: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ============================================================
+           2. RESET & BASE
+           ============================================================ */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            scroll-padding-top: 84px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: clamp(15px, 1vw + 12px, 17px);
+            line-height: 1.65;
+            color: var(--text);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 15% 10%, rgba(139, 92, 246, 0.18), transparent 60%),
+                radial-gradient(ellipse 50% 40% at 85% 30%, rgba(6, 182, 212, 0.12), transparent 60%),
+                radial-gradient(ellipse 80% 60% at 50% 100%, rgba(139, 92, 246, 0.08), transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        img,
+        svg {
+            display: block;
+            max-width: 100%;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+            border: 0;
+            background: transparent;
+            color: inherit;
+        }
+
+        /* ============================================================
+           3. TYPOGRAPHY
+           ============================================================ */
+        h1,
+        h2,
+        h3,
+        .h-display {
+            font-family: var(--font-display);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 4.5vw + 0.5rem, 3.5rem);
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.2rem);
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+
+        h3 {
+            font-size: clamp(1.1rem, 0.8vw + 0.9rem, 1.35rem);
+            letter-spacing: 0;
+            margin-bottom: 8px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(95deg, var(--primary-glow) 0%, var(--accent-glow) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .eyebrow {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent-glow);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+        }
+
+        .lead {
+            color: var(--text-muted);
+            font-size: clamp(1rem, 0.5vw + 0.95rem, 1.15rem);
+            max-width: 80ch;
+            margin-inline: auto;
+        }
+
+        /* ============================================================
+           4. LAYOUT PRIMITIVES
+           ============================================================ */
+        .container {
+            width: 100%;
+            max-width: var(--container);
+            margin-inline: auto;
+            padding-inline: clamp(20px, 4vw, 40px);
+            position: relative;
+        }
+
+        section {
+            padding-block: clamp(48px, 6vw, 96px);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================================
+           5. HEADER / NAVIGATION
+           ============================================================ */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: rgba(10, 10, 20, 0.55);
+            backdrop-filter: saturate(140%) blur(16px);
+            -webkit-backdrop-filter: saturate(140%) blur(16px);
+            border-bottom: 1px solid transparent;
+            transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+        }
+
+        .header.is-scrolled {
+            background: rgba(10, 10, 20, 0.85);
+            border-bottom-color: var(--border);
+        }
+
+        .header__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-block: 16px;
+            gap: 20px;
+        }
+
+        .header__logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.15rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .header__logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 6px 16px -6px var(--primary);
+        }
+
+        .header__logo .logo-text {
+            background: linear-gradient(95deg, var(--primary-glow), var(--accent-glow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav a {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 6px 0;
+            transition: color 0.2s var(--ease);
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s var(--ease-out);
+        }
+
+        .nav a:hover {
+            color: var(--text);
+        }
+
+        .nav a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .header__right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .lang-switch {
+            display: inline-flex;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 3px;
+            gap: 2px;
+        }
+
+        .lang-switch button {
+            padding: 6px 12px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            border-radius: 999px;
+            color: var(--text-muted);
+            transition: all 0.25s var(--ease);
+        }
+
+        .lang-switch button.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+            color: white;
+            box-shadow: 0 4px 12px -4px var(--primary);
+        }
+
+        .lang-switch button:not(.active):hover {
+            color: var(--text);
+        }
+
+        .menu-toggle {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            color: var(--text);
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .menu-toggle:hover {
+            border-color: var(--border-strong);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .menu-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Mobile dropdown */
+        .mobile-menu {
+            display: none;
+            border-top: 1px solid var(--border);
+            background: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(16px);
+            padding: 16px clamp(20px, 4vw, 40px) 24px;
+        }
+
+        .mobile-menu.is-open {
+            display: block;
+            animation: slideDown 0.25s var(--ease-out);
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 12px 0;
+            color: var(--text-muted);
+            font-weight: 500;
+            border-bottom: 1px solid var(--border);
+            transition: color 0.2s, padding-left 0.2s;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--text);
+            padding-left: 8px;
+        }
+
+        .mobile-menu .lang-switch {
+            margin-top: 18px;
+            align-self: flex-start;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 880px) {
+            .nav,
+            .header__right .lang-switch {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: inline-flex;
+            }
+        }
+
+        /* ============================================================
+           6. HERO SECTION
+           ============================================================ */
+        .hero {
+            padding-top: clamp(100px, 12vh, 150px);
+            padding-bottom: 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero__grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(139, 92, 246, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.06) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 30%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 30%, transparent 80%);
+            pointer-events: none;
+        }
+
+        .version-tag {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent-glow);
+            background: rgba(6, 182, 212, 0.08);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            border-radius: 99px;
+            padding: 4px 16px;
+            margin-top: 16px;
+            margin-bottom: 8px;
+        }
+
+        /* ============================================================
+           7. STATS GRID & DASHBOARD
+           ============================================================ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .stat-card {
+            background: linear-gradient(160deg, var(--surface), var(--bg-elev));
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s var(--ease-out), border-color 0.3s var(--ease);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-strong);
+        }
+
+        .stat-card__icon {
+            color: var(--accent-glow);
+            width: 32px;
+            height: 32px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card__number {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            font-weight: 900;
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: 8px;
+            background: linear-gradient(95deg, #fff 30%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .stat-card__label {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--primary-glow);
+            margin-bottom: 6px;
+        }
+
+        .stat-card__desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        /* ============================================================
+           8. DETAILS SECTIONS
+           ============================================================ */
+        .details-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 64px;
+        }
+
+        @media (max-width: 900px) {
+            .details-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .details-block {
+            background: rgba(24, 24, 40, 0.4);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        /* Tables styling */
+        .db-table-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .db-table-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 16px;
+        }
+
+        .db-table-item:last-child {
+            border: 0;
+            padding-bottom: 0;
+        }
+
+        .db-table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .db-table-name {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: var(--accent-glow);
+        }
+
+        .db-table-cols {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-soft);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .db-table-details {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Features List */
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text);
+            transition: background 0.2s;
+        }
+
+        .feature-item:hover {
+            background: rgba(139, 92, 246, 0.05);
+            border-color: rgba(139, 92, 246, 0.2);
+        }
+
+        .feature-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        /* ============================================================
+           9. FOOTER
+           ============================================================ */
+        .footer {
+            margin-top: 64px;
+            border-top: 1px solid var(--border);
+            padding-block: 40px;
+            background: rgba(10, 10, 20, 0.8);
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer__inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 16px;
+        }
+
+        .footer__brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.1rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .footer__brand img {
+            border-radius: 6px;
+        }
+
+        .footer__links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--text-soft);
+        }
+
+        .footer__links a {
+            transition: color 0.2s;
+        }
+
+        .footer__links a:hover {
+            color: var(--text);
+        }
+
+        .footer__sep {
+            color: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Back to top / back button */
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            padding: 10px 24px;
+            border-radius: 99px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.25s var(--ease);
+        }
+
+        .btn-back:hover {
+            background: rgba(139, 92, 246, 0.08);
+            border-color: var(--border-strong);
+            transform: translateX(-4px);
+        }
+
+        /* Packages layout */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+        .package-group h3 {
+            font-size: 1rem;
+            color: var(--primary-glow);
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 6px;
+        }
+        .package-list-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .package-link {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text);
+            transition: all 0.2s var(--ease);
+        }
+        .package-link:hover {
+            background: rgba(6, 182, 212, 0.05);
+            border-color: rgba(6, 182, 212, 0.2);
+            color: var(--accent-glow);
+            transform: translateX(4px);
+        }
+        .package-link small {
+            font-size: 0.75rem;
+            color: var(--text-soft);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===========================================================
+     HEADER
+     =========================================================== -->
+    <header class="header" id="site-header">
+        <div class="container header__inner">
+            <a href="index.html" class="header__logo" aria-label="Otaku Shelf – zur Startseite">
+                <img src="favicon.png" alt="" width="36" height="36">
+                <span class="logo-text">OTAKU SHELF</span>
+            </a>
+
+            <nav class="nav" aria-label="Hauptnavigation">
+                <a href="index.html">Home</a>
+                <a href="index.html#features" data-i18n="nav_features">Funktionen</a>
+                <a href="index.html#gallery" data-i18n="nav_gallery">UI-Showcase</a>
+                <a href="index.html#faq" data-i18n="nav_faq">FAQ</a>
+                <a href="stats.html" style="color: var(--text);" data-i18n="nav_stats">Nerd-Stats</a>
+            </nav>
+
+            <div class="header__right">
+                <div class="lang-switch" role="group" aria-label="Sprache wählen">
+                    <button type="button" data-lang="de" class="active">DE</button>
+                    <button type="button" data-lang="en">EN</button>
+                </div>
+
+                <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu"
+                    aria-label="Menü öffnen">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="mobile-menu" role="region" aria-label="Mobile Navigation">
+            <a href="index.html">Home</a>
+            <a href="index.html#features" data-i18n="nav_features">Funktionen</a>
+            <a href="index.html#gallery" data-i18n="nav_gallery">UI-Showcase</a>
+            <a href="index.html#faq" data-i18n="nav_faq">FAQ</a>
+            <a href="stats.html" data-i18n="nav_stats">Nerd-Stats</a>
+            <div class="lang-switch" role="group" aria-label="Sprache wählen">
+                <button type="button" data-lang="de" class="active">DE</button>
+                <button type="button" data-lang="en">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <main id="top">
+
+        <!-- ===========================================================
+         HERO SECTION
+         =========================================================== -->
+        <section class="hero">
+            <div class="hero__grid"></div>
+            <div class="container">
+                <span class="eyebrow" data-i18n="stats_eyebrow">Unter der Haube</span>
+                <h1 data-i18n="stats_title">Otaku Shelf in Zahlen</h1>
+                <div class="version-tag" data-i18n="version_tag">Version 1.4.0 · Build 146</div>
+                <p class="lead" data-i18n="stats_subtitle">Ein detaillierter, technischer Blick auf die Codebasis, Datenbankstruktur und den Entwicklungsstand vom 29. August 2026.</p>
+
+                <a href="index.html" class="btn-back">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span data-i18n="btn_back">Zurück zur Startseite</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ===========================================================
+         DASHBOARD SECTION
+         =========================================================== -->
+        <section class="container">
+            <div class="stats-grid">
+                <!-- Lines of Code -->
+                <div class="stat-card">
+                    <svg class="stat-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="16 18 22 12 16 6"></polyline>
+                        <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                    <div class="stat-card__number">164.680</div>
+                    <div class="stat-card__label" data-i18n="label_loc">Zeilen Code (LoC)</div>
+                    <div class="stat-card__desc" data-i18n="desc_loc">Dart-Quellcode in 462 Quelldateien – davon 114.251 Zeilen handgeschriebener App-Code in 447 Dateien. Dazu 10.755 Zeilen generierter Datenbank-Code (Drift/SQLite) und 39.674 Zeilen generierter Lokalisierungs-Code, erzeugt aus 23.014 Zeilen Übersetzungsdaten in 6 ARB-Dateien.</div>
+                </div>
+
+                <!-- Languages & Translations -->
+                <div class="stat-card">
+                    <svg class="stat-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <div class="stat-card__number">8.658</div>
+                    <div class="stat-card__label" data-i18n="label_translations">Übersetzte Phrasen</div>
+                    <div class="stat-card__desc" data-i18n="desc_translations">Genau 1.443 übersetzte Textblöcke und Benutzeroberflächen-Elemente in 6 vollständig lokalisierten Sprachen: Deutsch, Englisch, Französisch, Italienisch, Japanisch (Kanjis/Kanas) & Japanisch (Romaji Umschrift).</div>
+                </div>
+
+                <!-- Database Structure -->
+                <div class="stat-card">
+                    <svg class="stat-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                        <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path>
+                    </svg>
+                    <div class="stat-card__number">119</div>
+                    <div class="stat-card__label" data-i18n="label_db">Datenbank-Spalten</div>
+                    <div class="stat-card__desc" data-i18n="desc_db">Verteilt auf 9 Tabellen in der relationalen Drift (SQLite) Engine (Schema-Version 33) für eine extrem performante, lokale Datenhaltung ("Local-First") mit Synchronisationsprotokoll.</div>
+                </div>
+
+                <!-- Features -->
+                <div class="stat-card">
+                    <svg class="stat-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="9"></rect>
+                        <rect x="14" y="3" width="7" height="5"></rect>
+                        <rect x="14" y="12" width="7" height="9"></rect>
+                        <rect x="3" y="16" width="7" height="5"></rect>
+                    </svg>
+                    <div class="stat-card__number">14</div>
+                    <div class="stat-card__label" data-i18n="label_features">Software-Module</div>
+                    <div class="stat-card__desc" data-i18n="desc_features">Eigenständige funktionale Programmmodule wie Barcode-Scan & OCR, Minispiele, Statistiken, Buch-Checker und Cloud-Synchronisation für nahtlose Workflows.</div>
+                </div>
+
+                <!-- Automated Tests -->
+                <div class="stat-card">
+                    <svg class="stat-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                    </svg>
+                    <div class="stat-card__number">814</div>
+                    <div class="stat-card__label" data-i18n="label_tests">Automatisierte Tests</div>
+                    <div class="stat-card__desc" data-i18n="desc_tests">Unit- und Widget-Testfälle in 90 Testdateien (18.501 Zeilen Testcode) sichern die Stabilität der App bei jedem Update – inklusive Sync-Merge-, Import-, Leih- und Datenbank-Logik.</div>
+                </div>
+
+                <!-- Git & Commits -->
+                <div class="stat-card">
+                    <svg class="stat-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="18" cy="18" r="3"></circle>
+                        <circle cx="6" cy="6" r="3"></circle>
+                        <circle cx="6" cy="18" r="3"></circle>
+                        <path d="M18 15V9a4 4 0 0 0-4-4H9"></path>
+                        <line x1="6" y1="9" x2="6" y2="15"></line>
+                    </svg>
+                    <div class="stat-card__number">1.156</div>
+                    <div class="stat-card__label" data-i18n="label_commits">Git Commits</div>
+                    <div class="stat-card__desc" data-i18n="desc_commits">Ein intensiver Entwicklungszyklus, der die Evolution der App dokumentiert. Zusätzlich sind 163 statische Assets (Fonts, Bilder, Sounds, UI-Ressourcen) im Umfang von 21,2 MB integriert.</div>
+                </div>
+            </div>
+
+            <!-- Details Section -->
+            <div class="details-section">
+                <!-- Database Details -->
+                <div class="details-block">
+                    <h2 data-i18n="db_title">Datenbankstruktur</h2>
+                    <div class="db-table-list">
+                        <div class="db-table-item">
+                            <div class="db-table-header">
+                                <span class="db-table-name">Books</span>
+                                <span class="db-table-cols">57 Cols</span>
+                            </div>
+                            <div class="db-table-details" data-i18n="db_desc_books">Zentrale Tabelle für die Buchdetails: Titel, Autoren, Zeichner & Übersetzer, ISBNs, Verlage, Originaltitel/-sprache, Auflage, Seitenzahlen, Preis & Währung, Zustand, persönliche & Community-Wertungen, Spice-Level, Tags, Favoriten, Lesestatus und Lesefortschritt, Verleih- und Leihstatus (inklusive „geliehen von“ samt Leih- und Rückgabedatum), Sync-Flags und Archivierungsmerkmale.</div>
+                        </div>
+                        <div class="db-table-item">
+                            <div class="db-table-header">
+                                <span class="db-table-name">ReleaseCalendarEntries</span>
+                                <span class="db-table-cols">20 Cols</span>
+                            </div>
+                            <div class="db-table-details" data-i18n="db_desc_releases">Verwaltet das Tracking zukünftiger Veröffentlichungen direkt aus Online-Datenquellen – samt Genauigkeit des Termins (tages-, monats- oder quartalsgenau), damit die App keinen Kalendertag erfindet, den die Quelle gar nicht kennt.</div>
+                        </div>
+                        <div class="db-table-item">
+                            <div class="db-table-header">
+                                <span class="db-table-name">SeriesMetadata</span>
+                                <span class="db-table-cols">10 Cols</span>
+                            </div>
+                            <div class="db-table-details" data-i18n="db_desc_series">Gruppiert Bücher in logische Sammelreihen, inklusive Serien-Covers, Vollständigkeits-Flags, Buchrücken-Grafiken und Trackingeinstellungen.</div>
+                        </div>
+                        <div class="db-table-item">
+                            <div class="db-table-header">
+                                <span class="db-table-name">SyncQueue / SyncConflicts</span>
+                                <span class="db-table-cols">12 Cols</span>
+                            </div>
+                            <div class="db-table-details" data-i18n="db_desc_sync">Zwei Tabellen zur Steuerung der Cloud-Synchronisation, die lokale Änderungen protokollieren und Replikationskonflikte verwalten.</div>
+                        </div>
+                        <div class="db-table-item">
+                            <div class="db-table-header">
+                                <span class="db-table-name">PublisherCustomLogos</span>
+                                <span class="db-table-cols">5 Cols</span>
+                            </div>
+                            <div class="db-table-details" data-i18n="db_desc_logos">Verwaltet benutzerdefinierte Verlagslogos zur Personalisierung des visuellen Regals.</div>
+                        </div>
+                        <div class="db-table-item">
+                            <div class="db-table-header">
+                                <span class="db-table-name">SpineColors</span>
+                                <span class="db-table-cols">3 Cols</span>
+                            </div>
+                            <div class="db-table-details" data-i18n="db_desc_spine_colors">Verwaltet die aus den Covern extrahierten dominanten Buchrücken-Farben zur caching-gestützten Shelf-Anzeige.</div>
+                        </div>
+                        <div class="db-table-item">
+                            <div class="db-table-header">
+                                <span class="db-table-name">LendingHistoryEntries</span>
+                                <span class="db-table-cols">7 Cols</span>
+                            </div>
+                            <div class="db-table-details" data-i18n="db_desc_lending_history">Historie abgeschlossener Verleih- und Leihvorgänge – beide Richtungen, also verliehene wie selbst ausgeliehene Bücher. Speist zusätzlich das Namens-Autocomplete beim Verleihen.</div>
+                        </div>
+                        <div class="db-table-item">
+                            <div class="db-table-header">
+                                <span class="db-table-name">BookEmbeddings</span>
+                                <span class="db-table-cols">5 Cols</span>
+                            </div>
+                            <div class="db-table-details" data-i18n="db_desc_embeddings">Lokaler Cache für Vektor-Repräsentationen der Buch-Metadaten (Float32-Blobs samt Modell-Version und Quelltext-Hash) – die Grundlage für kommende semantische Suchfunktionen.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Details -->
+                <div class="details-block">
+                    <h2 data-i18n="modules_title">Features / Module</h2>
+                    <div class="feature-list">
+                        <div class="feature-item"><span class="feature-dot"></span><span>home</span></div>
+                        <div class="feature-item"><span class="feature-dot"></span><span>book_detail</span></div>
+                        <div class="feature-item"><span class="feature-dot"></span><span>add_edit_book</span></div>
+                        <div class="feature-item"><span class="feature-dot"></span><span>scanner</span></div>
+                        <div class="feature-item"><span class="feature-dot"></span><span>wishlist</span></div>
+                        <div class="feature-item"><span class="feature-dot"></span><span>lent_books</span></div>
+                        <div class="feature-item"><span class="feature-dot"></span><span>release_calendar</span></div>
+                        <div class="feature-item"><span class="feature-dot"></span><span>minigames</span></div>
+                        <div class="feature-item"><span class="feature-dot"></span><span>stats</span></div>
+                        <div class="feature-item"><span class="feature-dot"></span><span>settings</span></div>
+                        <div class="feature-item"><span class="feature-dot"></span><span>tools</span></div>
+                        <div class="feature-item"><span class="feature-dot"></span><span>import_export</span></div>
+                        <div class="feature-item"><span class="feature-dot"></span><span>onboarding</span></div>
+                        <div class="feature-item"><span class="feature-dot"></span><span>feedback</span></div>
+                    </div>
+                    <div style="margin-top: 24px; font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;" data-i18n="modules_desc">
+                        Die modulare Feature-First-Architektur trennt Funktionen sauber in isolierte Module. Jedes Modul besitzt eigene UI-Elemente, Controller und Zustandshaltung. Dies garantiert Wartbarkeit und eine reibungslose Skalierbarkeit für zukünftige Versionen.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Packages Section -->
+            <div class="details-block" style="margin-top: 40px;">
+                <h2 data-i18n="packages_title">Verwendete Flutter Packages</h2>
+                <p style="margin-bottom: 24px; font-size: 0.95rem; color: var(--text-muted);" data-i18n="packages_desc">
+                    Otaku Shelf baut auf erstklassigen Bibliotheken aus der Flutter-Community auf. Hier sind die wichtigsten verwendeten Packages, verlinkt direkt auf pub.dev:
+                </p>
+                <div class="packages-grid">
+                    <!-- Core utilities -->
+                    <div class="package-group">
+                        <h3 data-i18n="pkg_group_core">Infrastruktur & State</h3>
+                        <div class="package-list-links">
+                            <a href="https://pub.dev/packages/drift" target="_blank" rel="noopener" class="package-link"><span>drift</span> <small>v2.34.3</small></a>
+                            <a href="https://pub.dev/packages/provider" target="_blank" rel="noopener" class="package-link"><span>provider</span> <small>v6.1.5+1</small></a>
+                            <a href="https://pub.dev/packages/get_it" target="_blank" rel="noopener" class="package-link"><span>get_it</span> <small>v9.2.1</small></a>
+                            <a href="https://pub.dev/packages/purchases_flutter" target="_blank" rel="noopener" class="package-link"><span>purchases_flutter</span> <small>v10.10.1</small></a>
+                            <a href="https://pub.dev/packages/shared_preferences" target="_blank" rel="noopener" class="package-link"><span>shared_preferences</span> <small>v2.5.5</small></a>
+                            <a href="https://pub.dev/packages/flutter_secure_storage" target="_blank" rel="noopener" class="package-link"><span>flutter_secure_storage</span> <small>v11.0.0</small></a>
+                            <a href="https://pub.dev/packages/package_info_plus" target="_blank" rel="noopener" class="package-link"><span>package_info_plus</span> <small>v10.2.1</small></a>
+                        </div>
+                    </div>
+                    <!-- System / Hardware -->
+                    <div class="package-group">
+                        <h3 data-i18n="pkg_group_hardware">Scanner, System & Hardware</h3>
+                        <div class="package-list-links">
+                            <a href="https://pub.dev/packages/mobile_scanner" target="_blank" rel="noopener" class="package-link"><span>mobile_scanner</span> <small>v7.4.0</small></a>
+                            <a href="https://pub.dev/packages/camera" target="_blank" rel="noopener" class="package-link"><span>camera</span> <small>v0.12.0+2</small></a>
+                            <a href="https://pub.dev/packages/image_picker" target="_blank" rel="noopener" class="package-link"><span>image_picker</span> <small>v1.2.3</small></a>
+                            <a href="https://pub.dev/packages/permission_handler" target="_blank" rel="noopener" class="package-link"><span>permission_handler</span> <small>v13.0.1</small></a>
+                            <a href="https://pub.dev/packages/home_widget" target="_blank" rel="noopener" class="package-link"><span>home_widget</span> <small>v0.9.3</small></a>
+                            <a href="https://pub.dev/packages/quick_actions" target="_blank" rel="noopener" class="package-link"><span>quick_actions</span> <small>v1.1.0</small></a>
+                            <a href="https://pub.dev/packages/flutter_local_notifications" target="_blank" rel="noopener" class="package-link"><span>flutter_local_notifications</span> <small>v22.3.0</small></a>
+                            <a href="https://pub.dev/packages/in_app_review" target="_blank" rel="noopener" class="package-link"><span>in_app_review</span> <small>v2.0.12</small></a>
+                            <a href="https://pub.dev/packages/window_manager" target="_blank" rel="noopener" class="package-link"><span>window_manager</span> <small>v0.5.2</small></a>
+                        </div>
+                    </div>
+                    <!-- Cloud & Web -->
+                    <div class="package-group">
+                        <h3 data-i18n="pkg_group_cloud">Cloud Sync & APIs</h3>
+                        <div class="package-list-links">
+                            <a href="https://pub.dev/packages/googleapis" target="_blank" rel="noopener" class="package-link"><span>googleapis</span> <small>v17.0.0</small></a>
+                            <a href="https://pub.dev/packages/google_sign_in" target="_blank" rel="noopener" class="package-link"><span>google_sign_in</span> <small>v7.2.0</small></a>
+                            <a href="https://pub.dev/packages/icloud_storage_plus" target="_blank" rel="noopener" class="package-link"><span>icloud_storage_plus</span> <small>v4.0.0</small></a>
+                            <a href="https://pub.dev/packages/http" target="_blank" rel="noopener" class="package-link"><span>http</span> <small>v1.6.0</small></a>
+                            <a href="https://pub.dev/packages/connectivity_plus" target="_blank" rel="noopener" class="package-link"><span>connectivity_plus</span> <small>v7.3.1</small></a>
+                            <a href="https://pub.dev/packages/firebase_core" target="_blank" rel="noopener" class="package-link"><span>firebase_core</span> <small>v4.14.0</small></a>
+                            <a href="https://pub.dev/packages/firebase_crashlytics" target="_blank" rel="noopener" class="package-link"><span>firebase_crashlytics</span> <small>v5.3.0</small></a>
+                            <a href="https://pub.dev/packages/share_plus" target="_blank" rel="noopener" class="package-link"><span>share_plus</span> <small>v13.3.0</small></a>
+                            <a href="https://pub.dev/packages/app_links" target="_blank" rel="noopener" class="package-link"><span>app_links</span> <small>v7.2.1</small></a>
+                        </div>
+                    </div>
+                    <!-- UI / Charts -->
+                    <div class="package-group">
+                        <h3 data-i18n="pkg_group_ui">UI, Charts & Effekte</h3>
+                        <div class="package-list-links">
+                            <a href="https://pub.dev/packages/material_ui" target="_blank" rel="noopener" class="package-link"><span>material_ui</span> <small>v1.1.0</small></a>
+                            <a href="https://pub.dev/packages/cupertino_ui" target="_blank" rel="noopener" class="package-link"><span>cupertino_ui</span> <small>v1.0.1</small></a>
+                            <a href="https://pub.dev/packages/fl_chart" target="_blank" rel="noopener" class="package-link"><span>fl_chart</span> <small>v1.2.0</small></a>
+                            <a href="https://pub.dev/packages/cached_network_image" target="_blank" rel="noopener" class="package-link"><span>cached_network_image</span> <small>v4.0.0</small></a>
+                            <a href="https://pub.dev/packages/flutter_svg" target="_blank" rel="noopener" class="package-link"><span>flutter_svg</span> <small>v2.3.0</small></a>
+                            <a href="https://pub.dev/packages/font_awesome_flutter" target="_blank" rel="noopener" class="package-link"><span>font_awesome_flutter</span> <small>v11.0.0</small></a>
+                            <a href="https://pub.dev/packages/liquid_glass_widgets" target="_blank" rel="noopener" class="package-link"><span>liquid_glass_widgets</span> <small>v1.1.0</small></a>
+                            <a href="https://pub.dev/packages/super_sliver_list" target="_blank" rel="noopener" class="package-link"><span>super_sliver_list</span> <small>v0.4.1</small></a>
+                            <a href="https://pub.dev/packages/google_fonts" target="_blank" rel="noopener" class="package-link"><span>google_fonts</span> <small>v8.2.1</small></a>
+                            <a href="https://pub.dev/packages/scrollview_observer" target="_blank" rel="noopener" class="package-link"><span>scrollview_observer</span> <small>v1.27.1</small></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===========================================================
+     FOOTER
+     =========================================================== -->
+    <footer class="footer">
+        <div class="container footer__inner">
+            <div class="footer__brand">
+                <img src="favicon.png" alt="" width="24" height="24">
+                <span class="gradient-text">OTAKU SHELF</span>
+            </div>
+            <p>
+                &copy; <span id="copyright-year">2026</span> Otaku Shelf.
+                <span data-i18n="footer_copyright">Alle Rechte vorbehalten.</span>
+            </p>
+            <p data-i18n="footer_project">Ein Projekt von Sammlern für Sammler</p>
+            <div class="footer__links">
+                <a href="datenschutz.html" target="_blank" rel="noopener" data-i18n="footer_privacy">Datenschutz (Privacy Policy)</a>
+                <span class="footer__sep">·</span>
+                <a href="mailto:Deathtrap.Oakheart@gmail.com" data-i18n="footer_support">Support / Kontakt</a>
+                <span class="footer__sep">·</span>
+                <a href="impressum.html" target="_blank" rel="noopener">Impressum</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===========================================================
+     SCRIPT
+     =========================================================== -->
+    <script>
+        (function () {
+            'use strict';
+
+            const I18N = {
+                de: {
+                    title: 'Otaku Shelf – Entwickler-Statistiken',
+                    nav_features: 'Funktionen',
+                    nav_gallery: 'UI-Showcase',
+                    nav_faq: 'FAQ',
+                    nav_stats: 'Nerd-Stats',
+                    stats_eyebrow: 'Unter der Haube',
+                    stats_title: 'Otaku Shelf in Zahlen',
+                    version_tag: 'Version 1.4.0 · Build 146 (Stand 29. August 2026)',
+                    stats_subtitle: 'Ein detaillierter, technischer Blick auf die Codebasis, Datenbankstruktur und den Entwicklungsstand vom 29. August 2026.',
+                    btn_back: 'Zurück zur Startseite',
+
+                    label_loc: 'Zeilen Code (LoC)',
+                    desc_loc: 'Dart-Quellcode in 462 Quelldateien – davon 114.251 Zeilen handgeschriebener App-Code in 447 Dateien. Dazu 10.755 Zeilen generierter Datenbank-Code (Drift/SQLite) und 39.674 Zeilen generierter Lokalisierungs-Code, erzeugt aus 23.014 Zeilen Übersetzungsdaten in 6 ARB-Dateien.',
+
+                    label_translations: 'Übersetzte Phrasen',
+                    desc_translations: 'Genau 1.443 übersetzte Textblöcke und Benutzeroberflächen-Elemente in 6 vollständig lokalisierten Sprachen: Deutsch, Englisch, Französisch, Italienisch, Japanisch (Kanjis/Kanas) & Japanisch (Romaji Umschrift).',
+
+                    label_db: 'Datenbank-Spalten',
+                    desc_db: 'Verteilt auf 9 Tabellen in der relationalen Drift (SQLite) Engine (Schema-Version 33) für eine extrem performante, lokale Datenhaltung ("Local-First") mit Synchronisationsprotokoll.',
+
+                    label_features: 'Software-Module',
+                    desc_features: 'Eigenständige funktionale Programmmodule wie Barcode-Scan & OCR, Minispiele, Statistiken, Buch-Checker und Cloud-Synchronisation für nahtlose Workflows.',
+
+                    label_tests: 'Automatisierte Tests',
+                    desc_tests: 'Unit- und Widget-Testfälle in 90 Testdateien (18.501 Zeilen Testcode) sichern die Stabilität der App bei jedem Update – inklusive Sync-Merge-, Import-, Leih- und Datenbank-Logik.',
+
+                    label_commits: 'Git Commits & Assets',
+                    desc_commits: 'Ein intensiver Entwicklungszyklus, der die Evolution der App dokumentiert. Zusätzlich sind 163 statische Assets (Fonts, Bilder, Sounds, UI-Ressourcen) im Umfang von 21,2 MB integriert.',
+
+                    db_title: 'Datenbankstruktur',
+                    db_desc_books: 'Zentrale Tabelle für die Buchdetails: Titel, Autoren, Zeichner & Übersetzer, ISBNs, Verlage, Originaltitel/-sprache, Auflage, Seitenzahlen, Preis & Währung, Zustand, persönliche & Community-Wertungen, Spice-Level, Tags, Favoriten, Lesestatus und Lesefortschritt, Verleih- und Leihstatus (inklusive „geliehen von“ samt Leih- und Rückgabedatum), Sync-Flags und Archivierungsmerkmale.',
+                    db_desc_releases: 'Verwaltet das Tracking zukünftiger Veröffentlichungen direkt aus Online-Datenquellen – samt Genauigkeit des Termins (tages-, monats- oder quartalsgenau), damit die App keinen Kalendertag erfindet, den die Quelle gar nicht kennt.',
+                    db_desc_series: 'Gruppiert Bücher in logische Sammelreihen, inklusive Serien-Covers, Vollständigkeits-Flags, Buchrücken-Grafiken und Trackingeinstellungen.',
+                    db_desc_sync: 'Zwei Tabellen zur Steuerung der Cloud-Synchronisation, die lokale Änderungen protokollieren und Replikationskonflikte verwalten.',
+                    db_desc_logos: 'Verwaltet benutzerdefinierte Verlagslogos zur Personalisierung des visuellen Regals.',
+                    db_desc_spine_colors: 'Verwaltet die aus den Covern extrahierten dominanten Buchrücken-Farben zur caching-gestützten Shelf-Anzeige.',
+                    db_desc_lending_history: 'Historie abgeschlossener Verleih- und Leihvorgänge – beide Richtungen, also verliehene wie selbst ausgeliehene Bücher. Speist zusätzlich das Namens-Autocomplete beim Verleihen.',
+                    db_desc_embeddings: 'Lokaler Cache für Vektor-Repräsentationen der Buch-Metadaten (Float32-Blobs samt Modell-Version und Quelltext-Hash) – die Grundlage für kommende semantische Suchfunktionen.',
+
+                    modules_title: 'Features / Module',
+                    modules_desc: 'Die modulare Feature-First-Architektur trennt Funktionen sauber in isolierte Module. Jedes Modul besitzt eigene UI-Elemente, Controller und Zustandshaltung. Dies garantiert Wartbarkeit und eine reibungslose Skalierbarkeit für zukünftige Versionen.',
+
+                    footer_copyright: 'Alle Rechte vorbehalten.',
+                    footer_project: 'Ein Projekt von Sammlern für Sammler',
+                    footer_privacy: 'Datenschutz (Privacy Policy)',
+                    footer_support: 'Support / Kontakt',
+
+                    packages_title: 'Verwendete Flutter Packages',
+                    packages_desc: 'Otaku Shelf baut auf erstklassigen Bibliotheken aus der Flutter-Community auf. Hier sind die wichtigsten verwendeten Packages, verlinkt direkt auf pub.dev:',
+                    pkg_group_core: 'Infrastruktur & State',
+                    pkg_group_hardware: 'Scanner, System & Hardware',
+                    pkg_group_cloud: 'Cloud Sync & APIs',
+                    pkg_group_ui: 'UI, Charts & Effekte',
+                },
+                en: {
+                    title: 'Otaku Shelf – Developer Statistics',
+                    nav_features: 'Features',
+                    nav_gallery: 'UI Showcase',
+                    nav_faq: 'FAQ',
+                    nav_stats: 'Nerd Stats',
+                    stats_eyebrow: 'Under the Hood',
+                    stats_title: 'Otaku Shelf in Numbers',
+                    version_tag: 'Version 1.4.0 · Build 146 (As of August 29, 2026)',
+                    stats_subtitle: 'A detailed, technical look at the codebase, database structure, and development status as of August 29, 2026.',
+                    btn_back: 'Back to Home',
+
+                    label_loc: 'Lines of Code (LoC)',
+                    desc_loc: 'Dart source code across 462 source files – including 114,251 lines of handwritten app code in 447 files. Plus 10,755 lines of generated database code (Drift/SQLite) and 39,674 lines of generated localization code, produced from 23,014 lines of translation data in 6 ARB files.',
+
+                    label_translations: 'Translated Phrases',
+                    desc_translations: 'Exactly 1,443 translated text blocks and UI elements in 6 fully localized languages: German, English, French, Italian, Japanese (Kanjis/Kanas) & Japanese (Romaji transliteration).',
+
+                    label_db: 'Database Columns',
+                    desc_db: 'Distributed across 9 tables in the relational Drift (SQLite) engine (schema version 33) for high-performance, local data persistence ("Local-First") with sync protocol.',
+
+                    label_features: 'Software Modules',
+                    desc_features: 'Independent functional program modules such as Barcode Scan & OCR, Minigames, Stats, Book-Checker, and Cloud Sync for seamless workflows.',
+
+                    label_tests: 'Automated Tests',
+                    desc_tests: 'Unit and widget test cases in 90 test files (18,501 lines of test code) ensure the stability of the app with every update – including sync-merge, import, lending, and database logic.',
+
+                    label_commits: 'Git Commits & Assets',
+                    desc_commits: 'An intensive development cycle documenting the evolution of the app. In addition, 163 static assets (fonts, images, sounds, UI resources) totaling 21.2 MB are integrated.',
+
+                    db_title: 'Database Structure',
+                    db_desc_books: 'Central table for book details: title, authors, illustrators & translators, ISBNs, publishers, original title/language, edition, page counts, price & currency, condition, personal & community ratings, spice levels, tags, favorites, reading status and progress, lending and borrowing status (including "borrowed from" with loan and return dates), sync flags, and archiving details.',
+                    db_desc_releases: 'Manages the tracking of future releases directly fetched from online data sources – including how precise a date is (day, month, or quarter), so the app never invents a calendar day the source does not actually know.',
+                    db_desc_series: 'Groups books into logical collection series, including custom series covers, completeness flags, spine artwork, and tracking settings.',
+                    db_desc_sync: 'Two tables managing the cloud synchronization engine, logging local changes and handling conflicts.',
+                    db_desc_logos: 'Handles custom publisher logos for personalizing the visual bookshelves.',
+                    db_desc_spine_colors: 'Manages the dominant spine colors extracted from covers for cache-backed bookshelf rendering.',
+                    db_desc_lending_history: 'History of completed lending and borrowing processes – both directions, books lent out as well as books borrowed. Feeds the autocomplete for lending names.',
+                    db_desc_embeddings: 'Local cache for vector representations of book metadata (Float32 blobs plus model version and source text hash) – the foundation for upcoming semantic search features.',
+
+                    modules_title: 'Features / Modules',
+                    modules_desc: 'The modular Feature-First architecture cleanly separates functions into isolated modules. Each module has its own UI components, controllers, and state management. This ensures maintainability and smooth scalability for future versions.',
+
+                    footer_copyright: 'All rights reserved.',
+                    footer_project: 'A project by collectors for collectors',
+                    footer_privacy: 'Privacy Policy',
+                    footer_support: 'Support / Contact',
+
+                    packages_title: 'Used Flutter Packages',
+                    packages_desc: 'Otaku Shelf is built on top-tier libraries from the Flutter community. Here are the main packages used, linked directly to pub.dev:',
+                    pkg_group_core: 'Infrastructure & State',
+                    pkg_group_hardware: 'Scanner, System & Hardware',
+                    pkg_group_cloud: 'Cloud Sync & APIs',
+                    pkg_group_ui: 'UI, Charts & Effects',
+                }
+            };
+
+            /* ---------- Translation engine ---------- */
+            function applyLang(lang) {
+                if (!I18N[lang]) lang = 'de';
+                const dict = I18N[lang];
+
+                document.documentElement.lang = lang;
+                document.title = dict.title;
+
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key] != null) el.textContent = dict[key];
+                });
+
+                document.querySelectorAll('.lang-switch button').forEach(b => {
+                    b.classList.toggle('active', b.dataset.lang === lang);
+                });
+
+                try { localStorage.setItem('os-lang', lang); } catch (e) { }
+            }
+
+            function detectInitialLang() {
+                const url = new URL(window.location.href);
+                const fromUrl = url.searchParams.get('lang');
+                if (fromUrl === 'en' || fromUrl === 'de') return fromUrl;
+                try {
+                    const stored = localStorage.getItem('os-lang');
+                    if (stored === 'en' || stored === 'de') return stored;
+                } catch (e) { }
+                const nav = (navigator.language || 'de').slice(0, 2).toLowerCase();
+                return nav === 'en' ? 'en' : 'de';
+            }
+
+            function setLang(lang) {
+                applyLang(lang);
+                const url = new URL(window.location.href);
+                if (lang === 'de') url.searchParams.delete('lang');
+                else url.searchParams.set('lang', lang);
+                history.replaceState(null, '', url.toString());
+            }
+
+            /* ---------- DOM Ready ---------- */
+            document.addEventListener('DOMContentLoaded', function () {
+                // Year
+                const yearEl = document.getElementById('copyright-year');
+                if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+                // Language init
+                applyLang(detectInitialLang());
+                document.querySelectorAll('.lang-switch button').forEach(btn => {
+                    btn.addEventListener('click', () => setLang(btn.dataset.lang));
+                });
+
+                // Mobile menu
+                const toggle = document.getElementById('menu-toggle');
+                const menu = document.getElementById('mobile-menu');
+                toggle.addEventListener('click', () => {
+                    const open = menu.classList.toggle('is-open');
+                    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                    toggle.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
+                });
+
+                // Header shadow on scroll
+                const header = document.getElementById('site-header');
+                const onScroll = () => {
+                    const y = window.scrollY;
+                    header.classList.toggle('is-scrolled', y > 12);
+                };
+                onScroll();
+                window.addEventListener('scroll', onScroll, { passive: true });
+            });
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="de" class="no-js">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a14">
+    <title>Datenschutzerklärung & Privacy Policy - Otaku Shelf</title>
+    <link rel="canonical" href="https://www.otaku-shelf.info/datenschutz.html">
+
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Gleiche Design Tokens wie index.html */
+        :root {
+            --primary: #8b5cf6;
+            --primary-deep: #6a0dad;
+            --primary-glow: #a78bfa;
+            --accent: #06b6d4;
+            --accent-glow: #22d3ee;
+            --bg: #0a0a14;
+            --bg-elev: #11111e;
+            --surface: #181828;
+            --surface-2: #1f1f33;
+            --border: rgba(139, 92, 246, 0.18);
+            --border-strong: rgba(139, 92, 246, 0.45);
+            --text: #ececf5;
+            --text-muted: #9292ac;
+            --text-soft: #6f6f88;
+            --font-display: 'Orbitron', system-ui, sans-serif;
+            --font-body: 'Manrope', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+            --radius-lg: 24px;
+            --ease: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: clamp(15px, 1vw + 12px, 17px);
+            line-height: 1.65;
+            color: var(--text);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Atmospheric background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 50% at 15% 10%, rgba(139, 92, 246, 0.18), transparent 60%),
+                radial-gradient(ellipse 50% 40% at 85% 30%, rgba(6, 182, 212, 0.12), transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Container & Layout */
+        .container {
+            width: 100%;
+            max-width: 880px;
+            margin-inline: auto;
+            padding-inline: clamp(20px, 4vw, 40px);
+            position: relative;
+            z-index: 1;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        /* Header (Simplified) */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: rgba(10, 10, 20, 0.55);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-block: 16px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-inline: clamp(20px, 4vw, 40px);
+        }
+
+        .header__logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.15rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .header__logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+        }
+
+        .logo-text {
+            background: linear-gradient(95deg, var(--primary-glow), var(--accent-glow));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Lang Switch */
+        .lang-switch {
+            display: inline-flex;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 3px;
+            gap: 2px;
+        }
+
+        .lang-switch button {
+            background: transparent;
+            border: 0;
+            cursor: pointer;
+            padding: 6px 12px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            border-radius: 999px;
+            color: var(--text-muted);
+            transition: all 0.25s var(--ease);
+        }
+
+        .lang-switch button.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+            color: white;
+            box-shadow: 0 4px 12px -4px var(--primary);
+        }
+
+        .lang-switch button:not(.active):hover {
+            color: var(--text);
+        }
+
+        /* Legal Content Box */
+        .legal-box {
+            background: linear-gradient(160deg, var(--surface), var(--bg-elev));
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: clamp(32px, 5vw, 64px);
+            margin-top: clamp(100px, 15vh, 140px);
+            margin-bottom: 64px;
+            box-shadow: 0 12px 32px -16px rgba(0, 0, 0, 0.5);
+        }
+
+        .legal-box h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            color: var(--text);
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .legal-box h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            color: var(--primary-glow);
+            margin-top: 48px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+
+        .legal-box p {
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+
+        .legal-box ul {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .legal-box li {
+            margin-bottom: 8px;
+        }
+
+        .legal-box strong {
+            color: var(--text);
+        }
+
+        .legal-box a {
+            color: var(--accent-glow);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .legal-box a:hover {
+            border-color: var(--accent-glow);
+        }
+
+        .legal-box code {
+            font-family: var(--font-mono);
+            font-size: 0.88em;
+            color: var(--accent-glow);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            padding: 1px 6px;
+            white-space: nowrap;
+        }
+
+        .legal-box .meta {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            letter-spacing: 0.05em;
+            margin-bottom: 32px;
+        }
+
+        /* Footer */
+        .footer {
+            padding-block: 40px;
+            border-top: 1px solid var(--border);
+            background: var(--bg-elev);
+            text-align: center;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            z-index: 1;
+            position: relative;
+        }
+
+        .footer a {
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: var(--primary-glow);
+        }
+
+        .footer__links {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .content-de,
+        .content-en {
+            display: none;
+        }
+
+        .content-de.is-active,
+        .content-en.is-active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header__inner">
+            <a href="index.html" class="header__logo" aria-label="Zurück zur Startseite">
+                <img src="favicon.png" alt="" width="36" height="36">
+                <span class="logo-text">OTAKU SHELF</span>
+            </a>
+            <div class="lang-switch" role="group" aria-label="Sprache wählen">
+                <button type="button" data-lang="de" class="active">DE</button>
+                <button type="button" data-lang="en">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="legal-box">
+            <div id="content-de" class="content-de is-active">
+                <h1>Datenschutzerklärung</h1>
+                <p class="meta">Stand: 22. August 2026</p>
+
+                <h2>1. Verantwortlicher</h2>
+                <p>Sebastian Schmitt<br>
+                    Scheffelstr. 7<br>
+                    79585 Steinen<br>
+                    Deathtrap.Oakheart@gmail.com</p>
+
+                <h2>2. Allgemeines zur Datenverarbeitung</h2>
+                <p>Otaku Shelf ist eine App zur Verwaltung deiner persönlichen Buch- und Manga-Sammlung. Die App ist
+                    von Grund auf datensparsam gebaut: Deine Sammlung liegt in einer Datenbank auf deinem Gerät, und
+                    alle Kernfunktionen – Erfassen, Suchen, Sortieren, Lesefortschritt, Statistiken, Minispiele –
+                    funktionieren vollständig lokal und offline, ohne dass dabei Daten an mich übertragen werden. Ich
+                    betreibe keine zentrale Nutzerdatenbank und habe keinen Zugriff auf deine Sammlung.</p>
+                <p>Datenübertragungen finden nur in klar abgegrenzten Fällen statt, die in den folgenden Abschnitten
+                    einzeln beschrieben sind. Sie werden entweder durch eine konkrete Aktion von dir ausgelöst (z. B.
+                    einen Barcode scannen, einen Kauf-Link antippen) oder setzen voraus, dass du eine optionale
+                    Funktion vorher aktiviert hast (z. B. Cloud-Synchronisierung, Absturzberichte).</p>
+
+                <h2>3. Anmeldung & Konten (optional)</h2>
+                <p><strong>Otaku Shelf hat kein eigenes Benutzerkonto.</strong> Du musst dich nicht registrieren und
+                    dich nicht anmelden, um die App zu nutzen. Es gibt keinen Login-Bildschirm, kein Passwort und keine
+                    Nutzerverwaltung: Nach dem Start landest du direkt in deiner Bibliothek. Ich lege für dich also
+                    weder ein Konto an noch speichere ich Zugangsdaten auf einem Server.</p>
+                <p>Eine Anmeldung kommt ausschließlich dann ins Spiel, wenn du <em>freiwillig</em> die optionale
+                    Cloud-Sicherung oder -Synchronisierung nutzen möchtest (siehe Abschnitt 4). Dabei meldest du dich
+                    nicht bei Otaku Shelf an, sondern erteilst deinem <strong>bereits bestehenden</strong> Konto bei
+                    einem Cloud-Anbieter deiner Wahl (Google Drive, Dropbox, Microsoft OneDrive oder iCloud) die
+                    Erlaubnis, dass die App dort Dateien ablegen darf. Technisch geschieht das über das
+                    Standardverfahren OAuth 2.0 mit PKCE:</p>
+                <ul>
+                    <li>Die Passworteingabe findet auf den Seiten des jeweiligen Anbieters statt. Die App sieht dein
+                        Passwort nicht und erhält es auch nicht übermittelt.</li>
+                    <li>Die App erhält lediglich ein Zugriffstoken, das auf einen App-Ordner in deinem Cloud-Speicher
+                        beschränkt ist. Dieses Token wird ausschließlich <strong>lokal</strong> im gesicherten
+                        Schlüsselspeicher deines Geräts (Android Keystore / iOS Keychain) abgelegt und nicht an mich
+                        übertragen.</li>
+                    <li>Je nach Anbieter werden dabei deine E-Mail-Adresse und ggf. dein Anzeigename an die App
+                        zurückgemeldet, damit in den Einstellungen sichtbar ist, welches Konto verbunden ist.</li>
+                    <li>Du kannst die Verbindung jederzeit in den App-Einstellungen wieder trennen; das Token wird
+                        dabei vom Gerät gelöscht. Zusätzlich kannst du den Zugriff jederzeit direkt beim Anbieter
+                        widerrufen.</li>
+                </ul>
+                <p>Die App nutzt <strong>kein</strong> Firebase Authentication und keinen vergleichbaren
+                    Anmeldedienst. (Frühere Fassungen dieser Erklärung nannten Firebase Authentication; das war nicht
+                    korrekt – ein solcher Dienst ist in der App nicht enthalten.) Firebase wird ausschließlich für die
+                    optionalen Absturzberichte eingesetzt, siehe Abschnitt 10.</p>
+
+                <h2>4. Cloud-Backups & Synchronisierung (optional)</h2>
+                <p>Die Cloud-Anbindung ist eine <strong>optionale Zusatzfunktion und standardmäßig nicht aktiv</strong>
+                    – ohne sie bleibt die App vollständig nutzbar, deine Daten verlassen dann das Gerät nicht. Wenn du
+                    deine Daten geräteübergreifend sichern oder synchronisieren möchtest, kannst du einen der folgenden
+                    Dienste anbinden. Dabei werden deine Bibliotheksdaten (Titel, Autoren, Notizen, Cover-Bilder etc.)
+                    in deinem <strong>persönlichen</strong> Speicher bei diesem Anbieter abgelegt:</p>
+                <ul>
+                    <li><strong>Google Drive:</strong> Die App speichert Backups in einem speziellen Anwendungsordner
+                        auf deinem Google Drive.</li>
+                    <li><strong>Dropbox:</strong> Bei Auswahl von Dropbox werden die Daten direkt in deinen
+                        Dropbox-Account übertragen.</li>
+                    <li><strong>OneDrive:</strong> Bei Auswahl von Microsoft OneDrive (Microsoft Ireland Operations
+                        Ltd.) werden die Daten in einem App-Ordner deines OneDrive-Kontos abgelegt.</li>
+                    <li><strong>iCloud (nur iOS):</strong> Auf Apple-Geräten wird der iCloud "Ubiquitous Container"
+                        genutzt. Die Dateien werden im Ordner "Documents/" abgelegt, um für dich sichtbar zu sein.</li>
+                </ul>
+                <p>Die Übertragung erfolgt in allen Fällen über eine verschlüsselte HTTPS-Verbindung. Die Dateien
+                    selbst (ZIP-Archive mit Datenbankinhalten und Bildern) werden von der App <strong>nicht zusätzlich
+                    passwortgeschützt oder eigenverschlüsselt</strong> – für die Verschlüsselung der ruhenden Daten und
+                    den Schutz deines Kontos ist der jeweilige Cloud-Anbieter verantwortlich. Da die Dateien in deinem
+                    eigenen Speicher liegen, kannst du sie jederzeit selbst einsehen und löschen. Ich habe darauf
+                    keinen Zugriff.</p>
+
+                <h2>5. Abruf von Buchinformationen</h2>
+                <p>Um Metadaten zu deinen Büchern (z. B. Klappentexte, Cover, Erscheinungsdatum) automatisch zu
+                    ergänzen, sendet die App Suchanfragen (z. B. ISBN oder Titel) an externe Schnittstellen. Diese
+                    Abfragen werden durch deine Aktion ausgelöst – etwa einen Barcode-Scan oder eine Titelsuche. Es
+                    werden dabei <strong>keine Kontodaten und keine Inhalte deiner Sammlung</strong> übermittelt,
+                    sondern nur der jeweilige Suchbegriff. Wie bei jedem Internetaufruf ist die IP-Adresse deines
+                    Geräts für den angefragten Dienst technisch sichtbar. Folgende Dienste werden genutzt:</p>
+                <ul>
+                    <li><strong>Google Books & Open Library:</strong> Zur allgemeinen Suche von Buchmetadaten.</li>
+                    <li><strong>Deutsche Nationalbibliothek (DNB):</strong> Abruf hochdetaillierter Metadaten und
+                        Beschreibungen über die SRU-Schnittstelle im MARC21-Format (deutschsprachige Titel).</li>
+                    <li><strong>Bibliothèque nationale de France (BnF):</strong> Abruf von Metadaten zu
+                        französischsprachigen Titeln über die SRU-Schnittstelle im UNIMARC-Format.</li>
+                    <li><strong>Library of Congress (LoC):</strong> Abruf von Metadaten zu englischsprachigen
+                        (US-)Titeln über die SRU-Schnittstelle.</li>
+                    <li><strong>National Diet Library (NDL, Japan):</strong> Abruf von Metadaten und Covern zu
+                        japanischen Titeln über die OpenSearch-Schnittstelle.</li>
+                    <li><strong>OPAC SBN (Italien):</strong> Abruf von Metadaten zu italienischen Titeln über den
+                        italienischen Verbundkatalog.</li>
+                    <li><strong>AniList:</strong> Abruf von Serieninformationen (z. B. Gesamtbandzahl, Status
+                        laufend/abgeschlossen) anhand des Serientitels.</li>
+                    <li><strong>Discogs:</strong> Abruf von Informationen zu Hörbüchern und speziellen Releases via
+                        EAN-Barcode.</li>
+                    <li><strong>LTB-Datenbank (Supabase):</strong> Eigene, kuratierte Datenbank für Lustige
+                        Taschenbücher; wird ausschließlich bei Heft-Barcodes (VDZ/PVZ-Codes) abgefragt.</li>
+                    <li><strong>Neuerscheinungs-Datenbank (Supabase):</strong> Eigene, aus öffentlich zugänglichen
+                        Verlagsprogrammen zusammengestellte Datenbank für den Release-Kalender und die
+                        Serien-Bandsuche. Abgefragt werden ausschließlich Serien- bzw. Titelnamen; welche Serien du
+                        verfolgst, wird nur lokal auf deinem Gerät gespeichert.</li>
+                    <li><strong>Comix-Time:</strong> Abruf von Cover-Bildern sowie Prüfung der Verfügbarkeit für
+                        Kauf-Links anhand der ISBN.</li>
+                    <li><strong>Internet Archive:</strong> Abruf von Cover-Bildern als letzte Ausweichquelle, falls
+                        keine andere Quelle ein Cover liefert.</li>
+                </ul>
+                <p>Die beiden Supabase-Datenbanken (LTB und Neuerscheinungen) betreibe ich selbst; sie liegen auf
+                    Servern in Irland (EU-Region <code>eu-west-1</code>, näheres in Abschnitt 7). Dort werden keine
+                    Nutzerkonten geführt und keine Abfragen personenbezogen protokolliert.</p>
+
+                <h2>6. Cover-Bildsuche im In-App-Browser (optional)</h2>
+                <p>Findet keine der oben genannten Quellen ein Cover, kannst du in der Buchdetail-Ansicht auf
+                    Android und iOS eine manuelle Bildsuche starten. Dabei öffnet die App ein eingebettetes
+                    Browserfenster mit der Google-Bildersuche (<code>google.com</code>), vorbelegt mit dem Titel des
+                    Buches, damit du ein passendes Cover auswählen kannst.</p>
+                <p>Diese Funktion wird ausschließlich durch dein aktives Antippen gestartet. Sobald das Fenster
+                    geöffnet ist, handelt es sich um einen normalen Aufruf von Google: Dabei werden deine IP-Adresse und
+                    der Suchbegriff an Google übermittelt, und Google kann im Browserfenster Cookies setzen. Es
+                    ist dieselbe Verarbeitung, die auch bei einer Google-Suche im normalen Browser stattfindet; ich
+                    erhalte davon keine Daten. Weitere Informationen: <a href="https://policies.google.com/privacy"
+                        target="_blank" rel="noopener">Datenschutzerklärung von Google</a>.</p>
+
+                <h2>7. Feedback-Board und App-Bewertung (optional)</h2>
+                <p>Über die Einstellungen (Bereich „App-Info") erreichst du ein öffentliches Feedback-Board, auf dem du
+                    Funktionswünsche und Fehlermeldungen einreichen und für Beiträge anderer abstimmen kannst. Das Board
+                    läuft auf einer von mir betriebenen Datenbank-Instanz beim Hosting-Dienstleister
+                    <strong>Supabase</strong> (Supabase, Inc.), der als Auftragsverarbeiter für mich tätig ist. Die
+                    <strong>Daten werden ausschließlich auf Servern in Irland gespeichert</strong> (EU-Region
+                    <code>eu-west-1</code>) und verlassen für die Speicherung damit nicht die Europäische Union.</p>
+                <p><strong>Es ist kein Konto erforderlich.</strong> Damit Abstimmungen und eigene Beiträge dir
+                    zugeordnet werden können, erzeugt die App beim ersten Öffnen des Boards eine
+                    <strong>zufällige, pseudonyme Geräte-Kennung</strong> (UUID). Diese Kennung enthält keine
+                    Informationen über dich oder dein Gerät und wird lokal gespeichert. Verarbeitet werden:</p>
+                <ul>
+                    <li>Die pseudonyme Geräte-Kennung (wird beim Öffnen des Boards und bei jeder Abstimmung
+                        übermittelt, um Mehrfachabstimmungen zu verhindern und dir deine eigenen Beiträge anzuzeigen)
+                    </li>
+                    <li>Die von dir eingegebenen Inhalte: Titel und Beschreibung deines Beitrags sowie dessen Kategorie
+                    </li>
+                    <li>Zeitpunkt der Einreichung und Anzahl der Stimmen</li>
+                </ul>
+                <p>Beiträge werden erst nach manueller Freigabe durch mich öffentlich sichtbar. Bitte gib in Beiträgen
+                    keine personenbezogenen Daten an – sie sind nach der Freigabe für alle Nutzer der App lesbar.
+                    Rechtsgrundlage ist dein Ersuchen auf Bearbeitung deines Anliegens sowie mein berechtigtes Interesse
+                    an der Weiterentwicklung der App (Art. 6 Abs. 1 lit. b und f DSGVO). Wenn du die Löschung eines
+                    Beitrags wünschst, genügt eine kurze Nachricht an die oben genannte E-Mail-Adresse. Solange du das
+                    Board nicht öffnest, werden keine dieser Daten erzeugt oder übertragen.</p>
+                <p><strong>Bewertung der App.</strong> Auf Android und am Desktop fragt die App gelegentlich nach einer
+                    Bewertung mit ein bis fünf Sternen; über die Einstellungen (Bereich „App-Info") kannst du sie
+                    jederzeit selbst aufrufen. Vergibst du wenige Sterne, kannst du direkt ein kurzes Feedback
+                    schreiben – dieses wird wie ein Board-Beitrag verarbeitet (siehe oben) und trägt zusätzlich die von
+                    dir vergebene Sternzahl. Sie ist ausschließlich für mich sichtbar und erscheint nicht auf dem
+                    öffentlichen Board.</p>
+                <p>Unabhängig davon wird pro abgeschlossenem Bewertungs-Vorgang ein Statistik-Eintrag in derselben
+                    Supabase-Datenbank (Server in Irland) gespeichert. Er dient allein der Frage, ob dieser Weg
+                    funktioniert – wie Bewertungen ausfallen und wie viele Leute anschließend tatsächlich im Store
+                    bewerten. Gespeichert werden:</p>
+                <ul>
+                    <li>Die vergebene Sternzahl (1–5)</li>
+                    <li>Der Ausgang des Vorgangs (nur in der App bewertet, Store-Seite geöffnet oder Feedback
+                        geschrieben)</li>
+                    <li>Ob die Frage automatisch kam oder von dir in den Einstellungen aufgerufen wurde</li>
+                    <li>Plattform (z. B. Android) und App-Version</li>
+                    <li>Die oben genannte pseudonyme Geräte-Kennung sowie der Zeitpunkt</li>
+                </ul>
+                <p>Freitexte, Angaben zu deiner Sammlung oder Konto-Daten werden dabei nicht übertragen.
+                    Rechtsgrundlage ist mein berechtigtes Interesse an der Verbesserung der App (Art. 6 Abs. 1 lit. f
+                    DSGVO). Brichst du die Frage ab („Später" oder „Nicht mehr fragen"), wird nichts übertragen. Auf
+                    iPhone und iPad entsteht dieser Eintrag nie: dort wird Apples eigenes Bewertungs-Fenster verwendet,
+                    dessen Ergebnis die App nicht erfährt.</p>
+
+                <h2>8. In-App-Käufe</h2>
+                <p>Die Abwicklung von Käufen (z. B. Premium-Funktionen) erfolgt direkt über die jeweiligen App-Stores.
+                    Ich verarbeite dabei keine Zahlungsdaten selbst:</p>
+                <ul>
+                    <li><strong>Google Play Store:</strong> Abwicklung durch Google Ireland Limited, Gordon House,
+                        Barrow Street, Dublin 4, Irland.</li>
+                    <li><strong>Apple App Store:</strong> Abwicklung durch Apple Distribution International Ltd.,
+                        Hollyhill Industrial Estate, Cork, Irland.</li>
+                </ul>
+                <p>Zur Verwaltung und Zuordnung von Käufen und Premium-Freischaltungen nutzt die App zusätzlich den
+                    Dienst <strong>RevenueCat</strong> (RevenueCat, Inc., San Francisco, Kalifornien, USA). Dabei
+                    werden folgende Daten verarbeitet:</p>
+                <ul>
+                    <li>Eine pseudonyme, zufällig generierte App-User-ID (keine Klarnamen-Kennung)</li>
+                    <li>Kauf- und Transaktionsinformationen aus dem jeweiligen App-Store (z. B. gekauftes Produkt,
+                        Kaufdatum, Store-Beleg) – jedoch keine Zahlungsdaten wie Kreditkartennummern</li>
+                    <li>Technische Angaben wie Plattform (iOS/Android), Betriebssystem- und App-Version</li>
+                </ul>
+                <p>Wenn du in der App ein Cloud-Konto (z. B. Google Drive oder Dropbox) verbindest, werden zusätzlich
+                    deine E-Mail-Adresse, ggf. dein Anzeigename sowie der genutzte Cloud-Anbieter als Attribute an
+                    RevenueCat übermittelt. Dies dient ausschließlich dazu, deine Käufe bei Support-Anfragen deinem
+                    Konto zuordnen zu können (Rechtsgrundlage: Art. 6 Abs. 1 lit. b und f DSGVO). Die Verarbeitung
+                    erfolgt auf Servern in den USA; die Übermittlung ist über EU-Standardvertragsklauseln abgesichert.
+                    Weitere Informationen: <a href="https://www.revenuecat.com/privacy" target="_blank"
+                        rel="noopener">Datenschutzerklärung von RevenueCat</a>.</p>
+
+                <h2>9. Affiliate-Programme (Amazon, AWIN, Tradedoubler)</h2>
+                <p>Ich verwende in meiner App und auf dieser Webseite sogenannte Affiliate-Links zu verschiedenen
+                    Buchhandels-Partnerprogrammen. Wenn du auf einen solchen Link klickst und auf der externen Seite
+                    einkaufst, erhalte ich eine kleine Provision. Für dich ändert sich der Preis dabei nicht.</p>
+                <p>In der App kannst du in den Einstellungen (Bereich „Daten" → „Kauf-Link-Anbieter") selbst festlegen,
+                    über welchen Buchhändler der „Kaufen"-Button dich weiterleitet. Ein Affiliate-Link wird immer nur
+                    dann aufgerufen, wenn du aktiv auf einen Kauf-Button tippst, und ausschließlich für den von dir
+                    ausgewählten Anbieter. Standardmäßig ist Amazon voreingestellt.</p>
+                <p>Zur Abrechnung der Provisionen und zur Erkennung, dass die Bestellung über meinen Partnerlink
+                    zustande gekommen ist, kommen folgende Anbieter zum Einsatz. Diese setzen dabei Cookies oder
+                    ähnliche Tracking-Technologien ein und verarbeiten ggf. deine IP-Adresse:</p>
+                <ul>
+                    <li><strong>Amazon</strong> (Amazon EU S.à r.l.) – Amazon-Partnerprogramm. Weitere Informationen:
+                        <a href="https://www.amazon.de/gp/help/customer/display.html?nodeId=201909010" target="_blank"
+                            rel="noopener">Amazon Datenschutzerklärung</a>.</li>
+                    <li><strong>AWIN</strong> (AWIN AG, Eichhornstraße 3, 10785 Berlin, Deutschland) – vermittelt die
+                        Partnerprogramme von Thalia, Hugendubel, Orell Füssli, Ex Libris, Fnac, Cultura und Decitre.
+                        Weitere Informationen: <a href="https://www.awin.com/de/rechtliches/datenschutz"
+                            target="_blank" rel="noopener">Datenschutzerklärung von AWIN</a>.</li>
+                    <li><strong>Tradedoubler</strong> (Tradedoubler GmbH, Herzog-Wilhelm-Straße 26, 80331 München,
+                        Deutschland) – vermittelt die Partnerprogramme von la Feltrinelli und IBS. Weitere Informationen:
+                        <a href="https://www.tradedoubler.com/de/privacy-policy/" target="_blank"
+                            rel="noopener">Datenschutzerklärung von Tradedoubler</a>.</li>
+                </ul>
+                <p>Rechtsgrundlage für die Nutzung der Affiliate-Programme ist mein berechtigtes Interesse an der
+                    Finanzierung des Angebots (Art. 6 Abs. 1 lit. f DSGVO). Da ein Tracking erst durch dein aktives
+                    Antippen eines Kauf-Links ausgelöst wird, entscheidest du in jedem Einzelfall selbst darüber.</p>
+
+                <h2>10. Absturzberichte (Firebase Crashlytics)</h2>
+                <p><em>Hinweis: Dieser Abschnitt gilt erst ab App-Version 1.3.1. Ältere Versionen der App enthalten
+                    kein Crashlytics und übermitteln keinerlei Absturzberichte.</em></p>
+                <p>Die App bietet die Möglichkeit, bei Abstürzen automatisch anonyme Fehlerberichte an den Entwickler
+                    zu senden. Dafür wird der Dienst <strong>Firebase Crashlytics</strong> der Google Ireland Limited
+                    (Gordon House, Barrow Street, Dublin 4, Irland) genutzt.</p>
+                <p><strong>Diese Funktion ist standardmäßig deaktiviert</strong> und wird ausschließlich aktiviert,
+                    wenn du beim ersten Start der App ausdrücklich einwilligst (Rechtsgrundlage: Art. 6 Abs. 1 lit. a
+                    DSGVO). Du kannst deine Einwilligung jederzeit in den App-Einstellungen (Bereich „App-Info")
+                    erteilen oder mit Wirkung für die Zukunft widerrufen (Art. 7 Abs. 3 DSGVO).</p>
+                <p>Bei aktivierter Funktion werden im Falle eines Absturzes folgende Daten übermittelt:</p>
+                <ul>
+                    <li>Technische Absturzinformationen (Stacktraces, Zustand der App zum Absturzzeitpunkt)</li>
+                    <li>Gerätemodell, Betriebssystem-Version und App-Version</li>
+                    <li>Gerätezustand (z. B. freier Arbeitsspeicher, Ausrichtung)</li>
+                    <li>Eine pseudonyme Installations-ID (Crashlytics Installation UUID)</li>
+                </ul>
+                <p>Es werden <strong>keine Inhalte deiner Sammlung</strong> (Titel, Bücher, Notizen) und keine
+                    direkten persönlichen Daten wie Name oder E-Mail-Adresse übertragen. Google speichert
+                    Absturzberichte für 90 Tage. Eine Übermittlung in die USA (Google LLC) ist möglich; Google ist
+                    nach dem EU-US Data Privacy Framework zertifiziert, ergänzend gelten Standardvertragsklauseln.
+                    Weitere Informationen: <a href="https://firebase.google.com/support/privacy" target="_blank"
+                        rel="noopener">Datenschutz bei Firebase</a>.</p>
+
+                <h2>11. Diese Webseite</h2>
+                <p>Beim Aufruf dieser Webseite werden durch den Hosting-Anbieter automatisch Server-Logdaten
+                    verarbeitet (IP-Adresse, Zeitpunkt, aufgerufene Seite, Browsertyp), die für den technischen Betrieb
+                    und die Sicherheit erforderlich sind (Art. 6 Abs. 1 lit. f DSGVO). Diese Webseite setzt
+                    <strong>keine Analyse- oder Werbe-Cookies</strong> ein. Gespeichert wird lediglich deine gewählte
+                    Sprache (DE/EN) – und zwar ausschließlich lokal in deinem Browser (<code>localStorage</code>),
+                    ohne Übertragung an einen Server.</p>
+                <p>Zur Darstellung nutzt diese Seite Schriftarten des Dienstes <strong>Google Fonts</strong> (Google
+                    Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland), die von Google-Servern geladen
+                    werden. Dabei wird deine IP-Adresse an Google übermittelt. Rechtsgrundlage ist mein berechtigtes
+                    Interesse an einer einheitlichen, gut lesbaren Darstellung (Art. 6 Abs. 1 lit. f DSGVO). Weitere
+                    Informationen: <a href="https://policies.google.com/privacy" target="_blank"
+                        rel="noopener">Datenschutzerklärung von Google</a>.</p>
+
+                <h2>12. Deine Rechte</h2>
+                <p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und
+                    Datenübertragbarkeit sowie ein Widerspruchsrecht gegen Verarbeitungen auf Grundlage eines
+                    berechtigten Interesses. Erteilte Einwilligungen (z. B. für Absturzberichte) kannst du jederzeit mit
+                    Wirkung für die Zukunft widerrufen.</p>
+                <p>Da die App deine Daten primär lokal oder in deinem eigenen Cloud-Speicher hält und ich keine
+                    zentrale Nutzerdatenbank betreibe, kannst du diese Daten jederzeit selbst löschen – durch
+                    Deinstallation der App, Löschen der Cloud-Dateien oder Trennen der Cloud-Verbindung in den
+                    Einstellungen. Für alles Übrige genügt eine Nachricht an die in Abschnitt 1 genannte
+                    E-Mail-Adresse.</p>
+                <p>Außerdem steht dir ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu. Zuständig ist der
+                    Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg.</p>
+            </div>
+
+            <div id="content-en" class="content-en">
+                <h1>Privacy Policy</h1>
+                <p class="meta">Last updated: August 22, 2026</p>
+
+                <h2>1. Data Controller</h2>
+                <p>Sebastian Schmitt<br>
+                    Scheffelstr. 7<br>
+                    79585 Steinen<br>
+                    Deathtrap.Oakheart@gmail.com</p>
+
+                <h2>2. General Information</h2>
+                <p>Otaku Shelf is an app for managing your personal book and manga collection. The app is built to be
+                    data-minimal from the ground up: your collection lives in a database on your own device, and all
+                    core features – cataloguing, searching, sorting, reading progress, statistics, minigames – work
+                    entirely locally and offline, without transmitting any data to me. I do not operate a central user
+                    database and have no access to your collection.</p>
+                <p>Data is only transmitted in clearly defined cases, each described in the sections below. Such
+                    transfers are either triggered by a specific action on your part (e.g. scanning a barcode, tapping a
+                    buy link) or require that you have enabled an optional feature beforehand (e.g. cloud
+                    synchronization, crash reports).</p>
+
+                <h2>3. Sign-In & Accounts (optional)</h2>
+                <p><strong>Otaku Shelf has no user account of its own.</strong> You do not need to register or sign in
+                    to use the app. There is no login screen, no password and no user management: after launching the
+                    app you land directly in your library. I therefore neither create an account for you nor store any
+                    credentials on a server.</p>
+                <p>Signing in only becomes relevant if you <em>voluntarily</em> choose to use the optional cloud backup
+                    or synchronization feature (see section 4). In that case you are not signing in to Otaku Shelf;
+                    instead, you grant your <strong>pre-existing</strong> account with a cloud provider of your choice
+                    (Google Drive, Dropbox, Microsoft OneDrive or iCloud) permission for the app to store files there.
+                    Technically this uses the standard OAuth 2.0 flow with PKCE:</p>
+                <ul>
+                    <li>You enter your password on the provider's own pages. The app never sees your password and is
+                        never given it.</li>
+                    <li>The app only receives an access token scoped to an app folder within your cloud storage. This
+                        token is stored <strong>locally only</strong>, in your device's secure key store (Android
+                        Keystore / iOS Keychain), and is not transmitted to me.</li>
+                    <li>Depending on the provider, your email address and possibly your display name are returned to the
+                        app so that the settings screen can show which account is connected.</li>
+                    <li>You can disconnect at any time in the app settings, which deletes the token from your device.
+                        You can additionally revoke access directly with the provider at any time.</li>
+                </ul>
+                <p>The app does <strong>not</strong> use Firebase Authentication or any comparable sign-in service.
+                    (Earlier versions of this policy mentioned Firebase Authentication; that was incorrect – no such
+                    service is included in the app.) Firebase is used exclusively for the optional crash reports, see
+                    section 10.</p>
+
+                <h2>4. Cloud Backups & Synchronization (optional)</h2>
+                <p>The cloud connection is an <strong>optional add-on feature and is not enabled by default</strong> –
+                    the app remains fully usable without it, and your data then never leaves your device. If you do want
+                    to back up or sync your data across devices, you can connect one of the following services. Your
+                    library data (titles, authors, notes, cover images, etc.) is then stored in your
+                    <strong>personal</strong> storage with that provider:</p>
+                <ul>
+                    <li><strong>Google Drive:</strong> The app stores backups in a specific application folder on your
+                        Google Drive.</li>
+                    <li><strong>Dropbox:</strong> When selecting Dropbox, data is transmitted directly to your Dropbox
+                        account.</li>
+                    <li><strong>OneDrive:</strong> When selecting Microsoft OneDrive (Microsoft Ireland Operations
+                        Ltd.), data is stored in an app folder of your OneDrive account.</li>
+                    <li><strong>iCloud (iOS only):</strong> On Apple devices, the iCloud "Ubiquitous Container" is used.
+                        Files are stored in the "Documents/" folder to be visible to you.</li>
+                </ul>
+                <p>In all cases the transfer takes place over an encrypted HTTPS connection. The files themselves (ZIP
+                    archives containing database contents and images) are <strong>not additionally password-protected or
+                    separately encrypted by the app</strong> – encryption at rest and the protection of your account are
+                    the responsibility of the respective cloud provider. Because the files reside in your own storage,
+                    you can inspect and delete them yourself at any time. I have no access to them.</p>
+
+                <h2>5. Retrieval of Book Information</h2>
+                <p>To automatically supplement metadata for your books (e.g., descriptions, covers, release dates), the
+                    app sends search queries (e.g., ISBN or title) to external interfaces. These queries are triggered by
+                    your action – such as a barcode scan or a title search. <strong>No account data and no contents of
+                    your collection</strong> are transmitted, only the respective search term. As with any internet
+                    request, your device's IP address is technically visible to the service being queried. The following
+                    services are used:</p>
+                <ul>
+                    <li><strong>Google Books & Open Library:</strong> For general book metadata searches.</li>
+                    <li><strong>German National Library (DNB):</strong> Retrieval of highly detailed metadata and
+                        descriptions via the SRU interface in MARC21 format (German-language titles).</li>
+                    <li><strong>Bibliothèque nationale de France (BnF):</strong> Retrieval of metadata for
+                        French-language titles via the SRU interface in UNIMARC format.</li>
+                    <li><strong>Library of Congress (LoC):</strong> Retrieval of metadata for English-language (US)
+                        titles via the SRU interface.</li>
+                    <li><strong>National Diet Library (NDL, Japan):</strong> Retrieval of metadata and covers for
+                        Japanese titles via the OpenSearch interface.</li>
+                    <li><strong>OPAC SBN (Italy):</strong> Retrieval of metadata for Italian titles via the Italian
+                        union catalogue.</li>
+                    <li><strong>AniList:</strong> Retrieval of series information (e.g., total volume count,
+                        ongoing/completed status) based on the series title.</li>
+                    <li><strong>Discogs:</strong> Retrieval of information on audiobooks and special releases via EAN
+                        barcodes.</li>
+                    <li><strong>LTB database (Supabase):</strong> My own curated database for "Lustige Taschenbücher"
+                        comic digests; queried exclusively for magazine barcodes (VDZ/PVZ codes).</li>
+                    <li><strong>New releases database (Supabase):</strong> My own database, compiled from publicly
+                        available publisher catalogues, used for the release calendar and series volume search. Only
+                        series or title names are queried; which series you follow is stored locally on your device
+                        only.</li>
+                    <li><strong>Comix-Time:</strong> Retrieval of cover images and availability checks for purchase
+                        links based on the ISBN.</li>
+                    <li><strong>Internet Archive:</strong> Retrieval of cover images as a last-resort fallback if no
+                        other source provides a cover.</li>
+                </ul>
+                <p>The two Supabase databases (LTB and new releases) are operated by me; they are hosted on servers in
+                    Ireland (EU region <code>eu-west-1</code>, see section 7 for details). No user accounts are kept
+                    there and no queries are logged in a personally identifiable way.</p>
+
+                <h2>6. Cover Image Search in the In-App Browser (optional)</h2>
+                <p>If none of the sources listed above provides a cover, you can start a manual image search from the
+                    book detail screen on Android and iOS. The app then opens an embedded browser window with Google
+                    Images (<code>google.com</code>), pre-filled with the book's title so that you can pick a suitable
+                    cover.</p>
+                <p>This feature is only ever started by you actively tapping it. Once the window is open, it is an
+                    ordinary Google request: your IP address and the search term are transmitted to Google, and Google
+                    may set cookies within that browser window. This is the same processing that takes place when you
+                    use Google Search in a regular browser; I receive no data from it. More information: <a
+                        href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
+                        Policy</a>.</p>
+
+                <h2>7. Feedback Board and App Rating (optional)</h2>
+                <p>Via the settings ("App Info" section) you can reach a public feedback board where you can submit
+                    feature requests and bug reports and vote on other people's entries. The board runs on a database
+                    instance operated by me with the hosting provider <strong>Supabase</strong> (Supabase, Inc.), acting
+                    as a processor on my behalf. The <strong>data is stored exclusively on servers in Ireland</strong>
+                    (EU region <code>eu-west-1</code>) and therefore does not leave the European Union for storage.</p>
+                <p><strong>No account is required.</strong> So that votes and your own submissions can be attributed to
+                    you, the app generates a <strong>random, pseudonymous device identifier</strong> (UUID) the first
+                    time you open the board. This identifier contains no information about you or your device and is
+                    stored locally. The following data is processed:</p>
+                <ul>
+                    <li>The pseudonymous device identifier (transmitted when the board is opened and with every vote, to
+                        prevent duplicate voting and to show you your own submissions)</li>
+                    <li>The content you enter: the title and description of your submission, and its category</li>
+                    <li>The time of submission and the number of votes</li>
+                </ul>
+                <p>Submissions only become publicly visible after manual approval by me. Please do not include personal
+                    data in submissions – once approved, they are readable by all users of the app. The legal basis is
+                    your request to have your matter addressed, together with my legitimate interest in improving the app
+                    (Art. 6(1)(b) and (f) GDPR). If you would like a submission deleted, a short message to the email
+                    address above is sufficient. As long as you do not open the board, none of this data is created or
+                    transmitted.</p>
+                <p><strong>Rating the app.</strong> On Android and desktop the app occasionally asks you to rate it
+                    with one to five stars; you can also start this yourself at any time from the settings ("App Info"
+                    section). If you give a low rating, you can write a short piece of feedback right away – it is
+                    processed like a board submission (see above) and additionally carries the number of stars you
+                    gave. That number is visible to me only and never appears on the public board.</p>
+                <p>Independently of that, one statistics record per completed rating flow is stored in the same
+                    Supabase database (servers in Ireland). Its only purpose is to tell whether this route works at
+                    all – how ratings turn out and how many people go on to actually rate in the store. The following
+                    is stored:</p>
+                <ul>
+                    <li>The number of stars given (1–5)</li>
+                    <li>The outcome of the flow (rated in the app only, store page opened, or feedback written)</li>
+                    <li>Whether the question appeared automatically or was opened by you from the settings</li>
+                    <li>Platform (e.g., Android) and app version</li>
+                    <li>The pseudonymous device identifier mentioned above, and the timestamp</li>
+                </ul>
+                <p>No free text, no information about your collection and no account data is transmitted. The legal
+                    basis is my legitimate interest in improving the app (Art. 6(1)(f) GDPR). If you dismiss the
+                    question ("Later" or "Don't ask again"), nothing is transmitted. On iPhone and iPad this record is
+                    never created: there the app uses Apple's own rating dialog, whose result the app never learns.</p>
+
+                <h2>8. In-App Purchases</h2>
+                <p>Purchases (e.g., Premium features) are handled directly through the respective app stores. I do not
+                    process any payment data myself:</p>
+                <ul>
+                    <li><strong>Google Play Store:</strong> Handled by Google Ireland Limited, Gordon House, Barrow
+                        Street, Dublin 4, Ireland.</li>
+                    <li><strong>Apple App Store:</strong> Handled by Apple Distribution International Ltd., Hollyhill
+                        Industrial Estate, Cork, Ireland.</li>
+                </ul>
+                <p>To manage purchases and premium unlocks, the app additionally uses the
+                    <strong>RevenueCat</strong> service (RevenueCat, Inc., San Francisco, California, USA). The
+                    following data is processed:</p>
+                <ul>
+                    <li>A pseudonymous, randomly generated app user ID (no real-name identifier)</li>
+                    <li>Purchase and transaction information from the respective app store (e.g., purchased product,
+                        purchase date, store receipt) – but no payment data such as credit card numbers</li>
+                    <li>Technical details such as platform (iOS/Android), operating system version, and app
+                        version</li>
+                </ul>
+                <p>If you connect a cloud account (e.g., Google Drive or Dropbox) in the app, your email address, your
+                    display name (if set), and the cloud provider used are additionally transmitted to RevenueCat as
+                    attributes. This is used solely to match your purchases to your account for support requests
+                    (legal basis: Art. 6(1)(b) and (f) GDPR). Processing takes place on servers in the USA; the
+                    transfer is safeguarded by EU Standard Contractual Clauses. More information: <a
+                        href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat Privacy
+                        Policy</a>.</p>
+
+                <h2>9. Affiliate Programs (Amazon, AWIN, Tradedoubler)</h2>
+                <p>I use so-called affiliate links to various bookshop partner programs within my app and on this
+                    website. If you click on such a link and make a purchase on the external site, I receive a small
+                    commission. The price remains exactly the same for you.</p>
+                <p>In the app you can decide yourself, in the settings (section "Data" → "Buy Link Provider"), which
+                    bookshop the "Buy" button forwards you to. An affiliate link is only ever invoked when you actively
+                    tap a buy button, and exclusively for the provider you selected. Amazon is preset by default.</p>
+                <p>To settle the commissions and to recognize that an order originated from my partner link, the
+                    following providers are used. They set cookies or similar tracking technologies and may process your
+                    IP address:</p>
+                <ul>
+                    <li><strong>Amazon</strong> (Amazon EU S.à r.l.) – Amazon Partner Program. Further information:
+                        <a href="https://www.amazon.de/gp/help/customer/display.html?nodeId=201909010" target="_blank"
+                            rel="noopener">Amazon Privacy Policy</a>.</li>
+                    <li><strong>AWIN</strong> (AWIN AG, Eichhornstraße 3, 10785 Berlin, Germany) – handles the partner
+                        programs of Thalia, Hugendubel, Orell Füssli, Ex Libris, Fnac, Cultura and Decitre. Further
+                        information: <a href="https://www.awin.com/gb/privacy" target="_blank" rel="noopener">AWIN
+                            Privacy Policy</a>.</li>
+                    <li><strong>Tradedoubler</strong> (Tradedoubler GmbH, Herzog-Wilhelm-Straße 26, 80331 Munich,
+                        Germany) – handles the partner programs of la Feltrinelli and IBS. Further information:
+                        <a href="https://www.tradedoubler.com/en/privacy-policy/" target="_blank" rel="noopener">Tradedoubler
+                            Privacy Policy</a>.</li>
+                </ul>
+                <p>The legal basis for using the affiliate programs is my legitimate interest in financing the service
+                    (Art. 6(1)(f) GDPR). Since tracking is only triggered by you actively tapping a buy link, you decide
+                    in each individual case.</p>
+
+                <h2>10. Crash Reports (Firebase Crashlytics)</h2>
+                <p><em>Note: This section only applies from app version 1.3.1 onwards. Older versions of the app do
+                    not include Crashlytics and do not transmit any crash reports.</em></p>
+                <p>The app offers the option to automatically send anonymous crash reports to the developer when the
+                    app crashes. For this purpose, the <strong>Firebase Crashlytics</strong> service provided by Google
+                    Ireland Limited (Gordon House, Barrow Street, Dublin 4, Ireland) is used.</p>
+                <p><strong>This feature is disabled by default</strong> and is only activated if you explicitly give
+                    your consent when starting the app for the first time (legal basis: Art. 6(1)(a) GDPR). You can
+                    grant or withdraw your consent at any time with future effect in the app settings ("App Info"
+                    section) (Art. 7(3) GDPR).</p>
+                <p>When enabled, the following data is transmitted in the event of a crash:</p>
+                <ul>
+                    <li>Technical crash information (stack traces, state of the app at the time of the crash)</li>
+                    <li>Device model, operating system version, and app version</li>
+                    <li>Device state (e.g., free memory, orientation)</li>
+                    <li>A pseudonymous installation ID (Crashlytics Installation UUID)</li>
+                </ul>
+                <p><strong>No contents of your collection</strong> (titles, books, notes) and no direct personal data
+                    such as your name or email address are transmitted. Google retains crash reports for 90 days. Data
+                    may be transferred to the USA (Google LLC); Google is certified under the EU-US Data Privacy
+                    Framework, and Standard Contractual Clauses apply additionally. More information: <a
+                        href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Privacy and
+                        Security in Firebase</a>.</p>
+
+                <h2>11. This Website</h2>
+                <p>When you access this website, the hosting provider automatically processes server log data (IP
+                    address, timestamp, page requested, browser type) which is necessary for technical operation and
+                    security (Art. 6(1)(f) GDPR). This website uses <strong>no analytics or advertising cookies</strong>.
+                    The only thing stored is your chosen language (DE/EN), and that exclusively in your browser
+                    (<code>localStorage</code>), without being transmitted to any server.</p>
+                <p>For its typography this site uses <strong>Google Fonts</strong> (Google Ireland Limited, Gordon House,
+                    Barrow Street, Dublin 4, Ireland), loaded from Google's servers. In doing so, your IP address is
+                    transmitted to Google. The legal basis is my legitimate interest in a consistent, legible
+                    presentation (Art. 6(1)(f) GDPR). More information: <a href="https://policies.google.com/privacy"
+                        target="_blank" rel="noopener">Google Privacy Policy</a>.</p>
+
+                <h2>12. Your Rights</h2>
+                <p>You have the right to access, rectify, delete and restrict the processing of your data, the right to
+                    data portability, and the right to object to processing based on a legitimate interest. Any consent
+                    you have given (e.g. for crash reports) can be withdrawn at any time with future effect.</p>
+                <p>Since the app holds your data primarily locally or in your own cloud storage, and since I operate no
+                    central user database, you can delete this data yourself at any time – by uninstalling the app,
+                    deleting the cloud files, or disconnecting the cloud connection in the settings. For anything else, a
+                    message to the email address given in section 1 is sufficient.</p>
+                <p>You also have the right to lodge a complaint with a data protection supervisory authority. The
+                    competent authority is the State Commissioner for Data Protection and Freedom of Information of
+                    Baden-Württemberg, Germany.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Otaku Shelf. Alle Rechte vorbehalten.</p>
+            <div class="footer__links">
+                <a href="index.html">Startseite</a>
+                <a href="impressum.html">Impressum</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btns = document.querySelectorAll('.lang-switch button');
+            const contentDe = document.getElementById('content-de');
+            const contentEn = document.getElementById('content-en');
+
+            function setLang(lang) {
+                btns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+                if (lang === 'de') {
+                    contentDe.classList.add('is-active');
+                    contentEn.classList.remove('is-active');
+                    document.documentElement.lang = 'de';
+                } else {
+                    contentEn.classList.add('is-active');
+                    contentDe.classList.remove('is-active');
+                    document.documentElement.lang = 'en';
+                }
+            }
+
+            // Init based on browser or previously saved lang
+            let initialLang = 'de';
+            try {
+                const saved = localStorage.getItem('os-lang');
+                if (saved === 'en' || saved === 'de') initialLang = saved;
+                else if ((navigator.language || '').toLowerCase().startsWith('en')) initialLang = 'en';
+            } catch (e) { }
+
+            setLang(initialLang);
+
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.dataset.lang;
+                    setLang(lang);
+                    try { localStorage.setItem('os-lang', lang); } catch (e) { }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

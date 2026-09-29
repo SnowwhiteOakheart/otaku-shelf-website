@@ -1,0 +1,2973 @@
+<!DOCTYPE html>
+<html lang="de" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otaku Shelf - Theme Builder</title>
+    <link rel="canonical" href="https://www.otaku-shelf.info/theme_generator.html">
+    <link rel="shortcut icon" href="favicon.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        /* =========================================================
+           DESIGN TOKENS — Otaku Shelf Homepage Style
+           ========================================================= */
+        :root {
+            --primary-color: #6a0dad;
+            --primary-light: #9333ea;
+            --secondary-color: #0891b2;
+            --secondary-light: #06b6d4;
+            --surface-color: #0f172a;
+            --surface-container-color: #1e293b;
+            --surface-elevated: #273449;
+            --text-color: #e2e8f0;
+            --secondary-text-color: #94a3b8;
+            --border-color: #334155;
+            --border-strong: #475569;
+            --supporter-color: #db2777;
+            --premium-color: #f59e0b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+
+            /* === Live-Preview-Variablen — werden vom JS gesetzt === */
+            --pv-scaffold: #0f1416;
+            --pv-surface: #1b2023;
+            --pv-surface-container-low: #171c1f;
+            --pv-surface-container: #1b2023;
+            --pv-surface-container-high: #252b2d;
+            --pv-surface-container-highest: #303638;
+            --pv-primary: #b4c5ff;
+            --pv-on-primary: #1a2d60;
+            --pv-primary-container: #324478;
+            --pv-on-primary-container: #dbe1ff;
+            --pv-secondary: #8fcef3;
+            --pv-on-secondary: #003549;
+            --pv-secondary-container: #004c68;
+            --pv-on-secondary-container: #c3e8ff;
+            --pv-tertiary: #81d3df;
+            --pv-on-tertiary: #00363c;
+            --pv-tertiary-container: #004f57;
+            --pv-on-tertiary-container: #9df0fb;
+            --pv-error: #ffb4ab;
+            --pv-on-error: #690005;
+            --pv-error-container: #93000a;
+            --pv-on-error-container: #ffdad6;
+            --pv-on-surface: #dee3e6;
+            --pv-on-surface-variant: #c5c6d0;
+            --pv-outline: #8f909a;
+            --pv-outline-variant: #45464f;
+            --pv-inverse-surface: #dee3e6;
+            --pv-inverse-primary: #4b5c92;
+            --pv-surface-overlay-alpha: 1.0;
+            --pv-shelf-bg: #0f1416;
+            --pv-shelf-primary: #283B50;
+            --pv-shelf-light: #4A6280;
+            --pv-shelf-dark: #152030;
+
+            /* === Akzent-Variablen (optional — fallen auf Defaults zurück) === */
+            --pv-appbar-title: var(--pv-on-surface);
+            --pv-appbar-icon: var(--pv-on-surface-variant);
+            --pv-search-hint: color-mix(in srgb, var(--pv-on-surface) 60%, transparent);
+            --pv-search-prefix-icon: var(--pv-on-surface-variant);
+            --pv-input-focused-border: var(--pv-primary);
+            --pv-headline-small: var(--pv-on-surface);
+            --pv-title-medium: var(--pv-on-surface);
+            --pv-body-medium: var(--pv-on-surface);
+
+            /* === Bottom-Bar (schwebende Glas-Pille) === */
+            --pv-bottom-bg: var(--pv-surface);
+            --pv-bottom-alpha: 0.55;
+            --pv-bottom-icon: var(--pv-on-surface-variant);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--surface-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        h1,
+        h2,
+        h3,
+        .font-heading {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .primary-gradient-text {
+            background: linear-gradient(90deg, var(--primary-light), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        a {
+            color: var(--secondary-light);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--primary-light);
+        }
+
+        /* =========================================================
+           HEADER — wie bei index.html
+           ========================================================= */
+        header {
+            background-color: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .header-logo img {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+        }
+
+        .header-logo span {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: 0.05em;
+        }
+
+        .header-back {
+            color: var(--secondary-text-color);
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .header-back:hover {
+            color: var(--primary-light);
+        }
+
+        /* =========================================================
+           LAYOUT
+           ========================================================= */
+        main {
+            padding-top: 5rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 1.5rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            color: var(--secondary-text-color);
+            font-size: 1.05rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .builder {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem 5rem;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 2rem;
+        }
+
+        @media (max-width: 1100px) {
+            .builder {
+                grid-template-columns: 1fr;
+            }
+
+            .panel-preview {
+                position: static !important;
+            }
+        }
+
+        .panel {
+            background: var(--surface-container-color);
+            border: 1px solid var(--border-color);
+            padding: 1.75rem;
+            border-radius: 12px;
+            min-width: 0;
+        }
+
+        .panel-preview {
+            position: sticky;
+            top: 5rem;
+            align-self: start;
+            max-height: calc(100vh - 6rem);
+            overflow-y: auto;
+        }
+
+        .panel-preview::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .panel-preview::-webkit-scrollbar-track {
+            background: var(--surface-color);
+        }
+
+        .panel-preview::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        /* =========================================================
+           BUILDER UI ELEMENTE
+           ========================================================= */
+        .builder-actions-top {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .preset-box {
+            background: linear-gradient(135deg, rgba(106, 13, 173, 0.15), rgba(8, 145, 178, 0.15));
+            border: 1px solid var(--primary-color);
+            padding: 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .preset-box label {
+            color: var(--primary-light);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            display: block;
+            margin-bottom: 0.6rem;
+        }
+
+        details {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        details[open] {
+            border-color: var(--border-strong);
+        }
+
+        summary {
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-color);
+            user-select: none;
+            transition: background-color 0.15s;
+        }
+
+        summary:hover {
+            background-color: var(--surface-elevated);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '';
+            width: 9px;
+            height: 9px;
+            border-right: 2px solid var(--primary-light);
+            border-bottom: 2px solid var(--primary-light);
+            transform: rotate(45deg);
+            transition: transform 0.2s;
+        }
+
+        details[open] summary::after {
+            transform: rotate(-135deg);
+        }
+
+        .summary-num {
+            display: inline-block;
+            color: var(--primary-light);
+            font-family: 'Orbitron', sans-serif;
+            margin-right: 0.6rem;
+            font-weight: 700;
+        }
+
+        .summary-tag {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.7rem;
+            text-transform: none;
+            color: var(--secondary-text-color);
+            font-weight: 400;
+            letter-spacing: 0;
+            margin-left: auto;
+            margin-right: 0.75rem;
+        }
+
+        .details-content {
+            padding: 1.25rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .form-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-stack:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-stack label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-stack small {
+            color: var(--secondary-text-color);
+            font-size: 0.75rem;
+            line-height: 1.4;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        select {
+            padding: 0.6rem 0.75rem;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        input[type="text"]:focus,
+        input[type="url"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.15);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary-light);
+        }
+
+        .range-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .range-row input[type="range"] {
+            flex: 1;
+        }
+
+        .range-row .range-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            color: var(--primary-light);
+            min-width: 3em;
+            text-align: right;
+        }
+
+        /* Color-Input Zeilen */
+        .color-row {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 0.6rem;
+            align-items: center;
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .color-row:last-child {
+            border-bottom: none;
+        }
+
+        .color-row .color-label {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .color-row .color-label-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .color-row .color-label-hint {
+            font-size: 0.7rem;
+            color: var(--secondary-text-color);
+        }
+
+        input[type="color"] {
+            -webkit-appearance: none;
+            appearance: none;
+            border: none;
+            width: 42px;
+            height: 36px;
+            border-radius: 6px;
+            cursor: pointer;
+            padding: 0;
+            background: transparent;
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 2px;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        input[type="color"]::-moz-color-swatch {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        .hex-input {
+            width: 90px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 0.5rem 0.4rem;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+        }
+
+        .hex-input:focus {
+            outline: none;
+            border-color: var(--primary-light);
+        }
+
+        /* Kontrast-Warnung */
+        .contrast-warn {
+            margin-top: 4px;
+            font-size: 0.7rem;
+            color: var(--warning-color);
+            display: none;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .contrast-warn.show {
+            display: inline-flex;
+        }
+
+        /* Switch-Toggles */
+        .switch-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            gap: 1rem;
+        }
+
+        .switch-row+.switch-row {
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .switch-label {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .switch-label .l {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .switch-label .h {
+            font-size: 0.7rem;
+            color: var(--secondary-text-color);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .switch-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: var(--border-color);
+            transition: 0.2s;
+            border-radius: 24px;
+        }
+
+        .switch-slider::before {
+            content: '';
+            position: absolute;
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            top: 3px;
+            background-color: white;
+            transition: 0.2s;
+            border-radius: 50%;
+        }
+
+        .switch input:checked+.switch-slider {
+            background-color: var(--primary-color);
+        }
+
+        .switch input:checked+.switch-slider::before {
+            transform: translateX(20px);
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-light);
+            box-shadow: 0 0 15px rgba(147, 51, 234, 0.5);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--secondary-light);
+            border: 1px solid var(--secondary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            box-shadow: 0 0 15px rgba(8, 145, 178, 0.5);
+        }
+
+        .btn-ghost {
+            background-color: transparent;
+            color: var(--secondary-text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-ghost:hover {
+            color: var(--text-color);
+            border-color: var(--border-strong);
+            background-color: var(--surface-elevated);
+        }
+
+        .btn-large {
+            width: 100%;
+            padding: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-row .btn {
+            flex: 1;
+            min-width: 140px;
+        }
+
+        /* Mode-Tabs (Einfach/Standard/Experte) */
+        .mode-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.4rem;
+            background: var(--surface-color);
+            padding: 0.4rem;
+            border-radius: 8px;
+            margin-bottom: 1.25rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .mode-tab {
+            padding: 0.6rem 0.5rem;
+            border: none;
+            background: transparent;
+            color: var(--secondary-text-color);
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.15s;
+        }
+
+        .mode-tab:hover {
+            color: var(--text-color);
+        }
+
+        .mode-tab.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .mode-hint {
+            font-size: 0.75rem;
+            color: var(--secondary-text-color);
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            background: rgba(8, 145, 178, 0.08);
+            border-left: 3px solid var(--secondary-color);
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* Info-Note (Hintergrundbild-Hinweis & Co.) */
+        .info-note {
+            font-size: 0.78rem;
+            color: var(--secondary-text-color);
+            line-height: 1.5;
+            margin-top: 0.5rem;
+            padding: 0.7rem 0.85rem;
+            background: rgba(245, 158, 11, 0.08);
+            border-left: 3px solid var(--premium-color);
+            border-radius: 0 4px 4px 0;
+        }
+
+        .info-note strong {
+            color: var(--text-color);
+        }
+
+        /* Akzent-Blöcke in der Sektion 04 */
+        .accent-block {
+            padding: 0.75rem 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .accent-block:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .accent-heading {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--secondary-light);
+            margin: 0 0 0.6rem;
+            letter-spacing: 0.05em;
+        }
+
+        .accent-sub {
+            display: block;
+            color: var(--secondary-text-color);
+            margin-bottom: 0.6rem;
+            font-size: 0.72rem;
+            line-height: 1.4;
+        }
+
+        /* Group-Header innerhalb eines Akkordeons */
+        .group-header {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--secondary-light);
+            margin: 1rem 0 0.5rem;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .group-header:first-child {
+            margin-top: 0;
+        }
+
+        /* Color-Group-Anzeige nach Modi */
+        .color-group {
+            display: contents;
+        }
+
+        .color-group.hidden {
+            display: none;
+        }
+
+        /* Hidden file input */
+        .file-hidden {
+            display: none;
+        }
+
+        /* Toast für Copy-Feedback */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--success-color);
+            color: white;
+            padding: 0.85rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.error {
+            background: var(--danger-color);
+        }
+
+        /* JSON-Vorschau */
+        .json-preview {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            max-height: 280px;
+            overflow: auto;
+            color: var(--text-color);
+            white-space: pre;
+            line-height: 1.5;
+        }
+
+        .json-preview .k {
+            color: var(--secondary-light);
+        }
+
+        .json-preview .s {
+            color: #a5d6a7;
+        }
+
+        .json-preview .n {
+            color: var(--premium-color);
+        }
+
+        .json-preview .b {
+            color: var(--supporter-color);
+        }
+
+        /* =========================================================
+           PREVIEW UI
+           ========================================================= */
+        .preview-tabs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.4rem;
+            background: var(--surface-color);
+            padding: 0.4rem;
+            border-radius: 8px;
+            margin-bottom: 1.25rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .preview-tab {
+            padding: 0.55rem 0.4rem;
+            border: none;
+            background: transparent;
+            color: var(--secondary-text-color);
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.15s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .preview-tab .icon {
+            font-size: 1.1rem;
+        }
+
+        .preview-tab:hover {
+            color: var(--text-color);
+        }
+
+        .preview-tab.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Phone mockup */
+        .phone-frame {
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
+            border-radius: 28px;
+            border: 8px solid #0a0a0c;
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                0 0 0 1px var(--border-color);
+            overflow: hidden;
+            background: var(--pv-scaffold);
+            position: relative;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-frame::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 22px;
+            background: #0a0a0c;
+            border-radius: 0 0 14px 14px;
+            z-index: 50;
+        }
+
+        /* Generic preview wrapper */
+        .pv-wrap {
+            background: var(--pv-scaffold);
+            color: var(--pv-on-surface);
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* AppBar mit Titel */
+        .pv-appbar {
+            padding: 2.5rem 1rem 0.75rem;
+            background-color: color-mix(in srgb, var(--pv-surface) calc(var(--pv-surface-overlay-alpha) * 100%), transparent);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .pv-search {
+            background-color: color-mix(in srgb, var(--pv-surface-container) calc(var(--pv-surface-overlay-alpha) * 100%), transparent);
+            border: 1px solid color-mix(in srgb, var(--pv-outline) 25%, transparent);
+            border-radius: 24px;
+            padding: 0.55rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .pv-search-icon {
+            color: var(--pv-search-prefix-icon);
+        }
+
+        .pv-search-text {
+            color: var(--pv-search-hint);
+            font-size: 0.9rem;
+            flex: 1;
+        }
+
+        .pv-search-action {
+            color: var(--pv-primary);
+            font-size: 1.1rem;
+        }
+
+        /* Content area */
+        .pv-content {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .pv-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Bottom App Bar — schwebende Glas-Pille mit integriertem Gradient-FAB */
+        .pv-bottom {
+            height: 52px;
+            margin: 0 16px 10px;
+            border-radius: 26px;
+            background-color: color-mix(in srgb, var(--pv-bottom-bg) calc(var(--pv-bottom-alpha) * 100%), transparent);
+            border: 1px solid color-mix(in srgb, var(--pv-outline-variant) 30%, transparent);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 0 0.75rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .pv-bottom-icon {
+            font-size: 1.25rem;
+            color: var(--pv-bottom-icon);
+            cursor: default;
+        }
+
+        .pv-fab {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--pv-primary), var(--pv-tertiary));
+            color: var(--pv-on-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 300;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+        }
+
+        /* === Bookshelf View === */
+        .pv-shelf {
+            flex: 1;
+            background-color: var(--pv-shelf-bg);
+            padding: 1.5rem 0 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5rem;
+            position: relative;
+        }
+
+        .pv-shelf-row {
+            position: relative;
+            width: 100%;
+            min-height: 90px;
+            padding: 0 0.5rem;
+        }
+
+        .pv-shelf-board {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 12px;
+            background-color: var(--pv-shelf-primary);
+            box-shadow: 0 8px 14px rgba(0, 0, 0, 0.4);
+        }
+
+        .pv-shelf-board::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--pv-shelf-light);
+        }
+
+        .pv-shelf-board::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: var(--pv-shelf-dark);
+        }
+
+        .pv-spine {
+            position: absolute;
+            bottom: 12px;
+            width: 32px;
+            border-radius: 2px 4px 4px 2px;
+            box-shadow: -2px 0 6px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.65rem;
+            font-weight: 700;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            padding: 6px 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* === Grid View === */
+        .pv-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding: 14px;
+        }
+
+        .pv-grid-item {
+            aspect-ratio: 2/3;
+            background-color: var(--pv-surface-container-high);
+            border-radius: 6px;
+            border: 1px solid color-mix(in srgb, var(--pv-outline) 30%, transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 6px;
+            color: var(--pv-on-surface);
+            font-size: 0.7rem;
+            line-height: 1.2;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pv-grid-item.selected {
+            border-color: var(--pv-primary);
+            border-width: 2px;
+            box-shadow: 0 0 0 2px color-mix(in srgb, var(--pv-primary) 30%, transparent);
+        }
+
+        .pv-grid-item .gi-title {
+            font-weight: 700;
+            font-size: 0.65rem;
+        }
+
+        .pv-grid-item .gi-vol {
+            color: var(--pv-on-surface-variant);
+            font-size: 0.6rem;
+        }
+
+        .pv-grid-item.cover-1 {
+            background: linear-gradient(135deg, var(--pv-primary), var(--pv-primary-container));
+            color: var(--pv-on-primary);
+        }
+
+        .pv-grid-item.cover-2 {
+            background: linear-gradient(135deg, var(--pv-secondary), var(--pv-secondary-container));
+            color: var(--pv-on-secondary);
+        }
+
+        .pv-grid-item.cover-3 {
+            background: linear-gradient(135deg, var(--pv-tertiary), var(--pv-tertiary-container));
+            color: var(--pv-on-tertiary);
+        }
+
+        /* === List View === */
+        .pv-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pv-list-item {
+            display: flex;
+            gap: 12px;
+            padding: 14px 16px;
+            border-bottom: 1px solid color-mix(in srgb, var(--pv-outline-variant) 100%, transparent);
+            align-items: center;
+        }
+
+        .pv-list-item.active {
+            background-color: color-mix(in srgb, var(--pv-primary) 15%, transparent);
+        }
+
+        .pv-list-cover {
+            width: 50px;
+            height: 75px;
+            border-radius: 4px;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+        }
+
+        .pv-list-cover.c1 {
+            background: linear-gradient(135deg, var(--pv-primary), var(--pv-primary-container));
+        }
+
+        .pv-list-cover.c2 {
+            background: linear-gradient(135deg, var(--pv-secondary), var(--pv-secondary-container));
+        }
+
+        .pv-list-cover.c3 {
+            background: linear-gradient(135deg, var(--pv-tertiary), var(--pv-tertiary-container));
+        }
+
+        .pv-list-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .pv-list-title {
+            font-weight: 600;
+            color: var(--pv-on-surface);
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .pv-list-sub {
+            color: var(--pv-on-surface-variant);
+            font-size: 0.75rem;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .pv-list-rating {
+            color: var(--premium-color);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+
+        .pv-list-chip {
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background-color: var(--pv-tertiary-container);
+            color: var(--pv-on-tertiary-container);
+            margin-right: 4px;
+            display: inline-block;
+        }
+
+        /* === Components Showcase === */
+        .pv-components {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            overflow-y: auto;
+        }
+
+        .pv-card {
+            background: var(--pv-surface-container);
+            border: 1px solid color-mix(in srgb, var(--pv-outline-variant) 100%, transparent);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .pv-card-title {
+            font-weight: 600;
+            color: var(--pv-title-medium);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .pv-card-body {
+            color: var(--pv-body-medium);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        .pv-btn-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .pv-btn {
+            padding: 0.45rem 0.95rem;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            cursor: default;
+            border: none;
+        }
+
+        .pv-btn-filled {
+            background: var(--pv-primary);
+            color: var(--pv-on-primary);
+        }
+
+        .pv-btn-tonal {
+            background: var(--pv-secondary-container);
+            color: var(--pv-on-secondary-container);
+        }
+
+        .pv-btn-outline {
+            background: transparent;
+            border: 1px solid var(--pv-outline);
+            color: var(--pv-primary);
+        }
+
+        .pv-btn-text {
+            background: transparent;
+            color: var(--pv-primary);
+            padding: 0.45rem 0.6rem;
+        }
+
+        .pv-chips {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .pv-chip {
+            padding: 0.3rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            background: var(--pv-tertiary-container);
+            color: var(--pv-on-tertiary-container);
+        }
+
+        .pv-chip.assist {
+            background: transparent;
+            border: 1px solid var(--pv-outline);
+            color: var(--pv-on-surface);
+        }
+
+        /* Snackbar / Banner */
+        .pv-snackbar {
+            background: var(--pv-inverse-surface);
+            color: var(--pv-scaffold);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .pv-snackbar-action {
+            color: var(--pv-inverse-primary);
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .pv-error-banner {
+            background: var(--pv-error-container);
+            color: var(--pv-on-error-container);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            border-left: 3px solid var(--pv-error);
+        }
+
+        /* Color-Roles Tabelle */
+        .pv-roles {
+            padding: 1rem;
+            overflow-y: auto;
+            background-color: var(--pv-scaffold);
+            color: var(--pv-on-surface);
+        }
+
+        .role-block {
+            margin-bottom: 1rem;
+        }
+
+        .role-block h4 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--pv-on-surface-variant);
+            margin: 0 0 0.4rem;
+            font-weight: 700;
+        }
+
+        .role-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .role-swatch {
+            padding: 0.55rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1.2;
+        }
+
+        .role-name {
+            display: block;
+            font-weight: 600;
+            font-size: 0.7rem;
+            margin-bottom: 1px;
+        }
+
+        .role-hex {
+            opacity: 0.75;
+            font-size: 0.6rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="header-logo">
+                <img src="favicon.png" alt="Otaku Shelf" onerror="this.style.display='none'">
+                <span class="primary-gradient-text">OTAKU SHELF</span>
+            </a>
+            <a href="index.html" class="header-back">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+                Zurück zur Startseite
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>🎨 <span class="primary-gradient-text">Theme Builder</span></h1>
+            <p>Erstelle dein eigenes Theme für Otaku Shelf — mit Live-Vorschau, Vorlagen und Export als JSON.
+                Importiere bestehende Themes zum Bearbeiten.</p>
+        </section>
+
+        <div class="builder">
+            <!-- ===== LINKES PANEL: BUILDER ===== -->
+            <section class="panel" id="builderPanel">
+
+                <div class="builder-actions-top">
+                    <button class="btn btn-secondary" onclick="document.getElementById('importInput').click()">
+                        📁 Theme importieren
+                    </button>
+                    <button class="btn btn-ghost" onclick="resetAll()">
+                        ↺ Zurücksetzen
+                    </button>
+                    <input type="file" id="importInput" class="file-hidden" accept=".json"
+                        onchange="handleFileImport(event)">
+                </div>
+
+                <div class="preset-box">
+                    <label>🎬 Vorlage auswählen</label>
+                    <select id="presetSelector" onchange="loadPreset()">
+                        <option value="custom">— Eigenes Theme erstellen —</option>
+                        <optgroup label="Standard Holz-Themes">
+                            <option value="lightBeech">🪵 Light Beech</option>
+                            <option value="darkOak">🌲 Dark Oak</option>
+                            <option value="noemBright">🐇 Noem Bright</option>
+                            <option value="noemDark">🐇 Noem Dark</option>
+                            <option value="matchaZen">🍵 Zen Bamboo</option>
+                            <option value="eInkManga">✒️ Manga Ink</option>
+                        </optgroup>
+                        <optgroup label="Anime & Glas-Themes">
+                            <option value="sakura">🌸 Anime Sakura</option>
+                            <option value="cyber">🌌 Anime Cyber</option>
+                            <option value="cyberPop">🪩 Cyber Pop</option>
+                            <option value="toxicNeon">🦠 Toxic Neon</option>
+                            <option value="gothicCrimson">🥀 Crimson Moon</option>
+                            <option value="deepOcean">🐋 Deep Abyss</option>
+                            <option value="vaporwave">🌇 Retro City</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <!-- 1. Basis-Einstellungen -->
+                <details open>
+                    <summary>
+                        <span><span class="summary-num">01</span>Basis</span>
+                    </summary>
+                    <div class="details-content">
+                        <div class="form-stack">
+                            <label>Theme-Name</label>
+                            <input type="text" id="themeName" value="Mein Theme" oninput="updateAll()">
+                            <small>Wird im Theme-Picker und in den Settings angezeigt.</small>
+                        </div>
+                        <div class="form-stack">
+                            <label>Emoji</label>
+                            <input type="text" id="themeEmoji" value="🎨" maxlength="2" oninput="updateAll()">
+                            <small>Erscheint vor dem Theme-Namen im Picker.</small>
+                        </div>
+                        <div class="form-stack">
+                            <label>Helligkeit (Material Brightness)</label>
+                            <select id="brightness" onchange="onBrightnessChanged()">
+                                <option value="light">☀️ Light Mode</option>
+                                <option value="dark" selected>🌙 Dark Mode</option>
+                            </select>
+                            <small>Bestimmt, wie Material-Komponenten Schatten und Elevation rendern.</small>
+                        </div>
+                        <div class="form-stack">
+                            <label>Surface-Transparenz <span
+                                    style="color:var(--secondary-text-color); font-weight:400;">(für
+                                    Glas-Effekt)</span></label>
+                            <div class="range-row">
+                                <input type="range" id="alphaSlider" min="0.3" max="1" step="0.05" value="1.0"
+                                    oninput="updateAll()">
+                                <span class="range-value" id="alphaValue">1.00</span>
+                            </div>
+                            <small>1.0 = Opak. Werte unter 1.0 lassen das Hintergrundbild durchscheinen
+                                (Glas/Anime-Look).</small>
+                        </div>
+                        <div class="info-note">
+                            💡 <strong>Hintergrundbilder</strong> werden direkt in der Otaku-Shelf-App gewählt:
+                            Einstellungen → Aussehen → "Hintergrundbild setzen". Der Generator legt nur Farben,
+                            Akzente und das Glas-Verhalten fest — das Bild kommt vom Gerät des Users.
+                        </div>
+                    </div>
+                </details>
+
+                <!-- 2. Material-Farben -->
+                <details open>
+                    <summary>
+                        <span><span class="summary-num">02</span>Material-Farben</span>
+                    </summary>
+                    <div class="details-content">
+
+                        <div class="mode-tabs" role="tablist" aria-label="Detail-Stufe der Material-Farben">
+                            <button class="mode-tab active" data-mode="basic"
+                                onclick="setColorMode('basic')">Einfach</button>
+                            <button class="mode-tab" data-mode="standard"
+                                onclick="setColorMode('standard')">Standard</button>
+                            <button class="mode-tab" data-mode="expert"
+                                onclick="setColorMode('expert')">Experte</button>
+                        </div>
+
+                        <div class="mode-hint" id="modeHint">
+                            5 Hauptfarben — der Rest wird automatisch beim Export ergänzt.
+                        </div>
+
+                        <div id="materialColorsContainer"></div>
+
+                    </div>
+                </details>
+
+                <!-- 3. Regal -->
+                <details open>
+                    <summary>
+                        <span><span class="summary-num">03</span>Bücherregal</span>
+                    </summary>
+                    <div class="details-content">
+                        <div class="form-stack">
+                            <label>Render-Stil</label>
+                            <select id="shelfStyle" onchange="updateAll()">
+                                <option value="wood">🪵 Holz (Opak, harte Schatten, klassisch)</option>
+                                <option value="glass">🔮 Glas (Transluzent, leuchtende Kanten)</option>
+                            </select>
+                            <small>Holz-Themes nutzen normalerweise Brett-Farben in der Surface-Tönung.
+                                Glas-Themes brauchen meistens Surface-Alpha < 1.0.</small>
+                        </div>
+                        <div id="shelfColorsContainer"></div>
+                    </div>
+                </details>
+
+                <!-- 4. Akzent-Details -->
+                <details>
+                    <summary>
+                        <span><span class="summary-num">04</span>Akzent-Details <span
+                                class="summary-tag">Optional</span></span>
+                    </summary>
+                    <div class="details-content">
+                        <div class="mode-hint">
+                            Feinheiten für Hardcore-Themes (wie <em>Anime Sakura</em> / <em>Anime Cyber</em>):
+                            unterschiedliche Farben für AppBar-Titel, Suchfeld, Dialog-Header und Text-Akzente.
+                            Felder leer lassen → Material-Defaults werden genutzt.
+                        </div>
+
+                        <!-- AppBar -->
+                        <div class="accent-block">
+                            <h4 class="accent-heading">📱 AppBar</h4>
+                            <div class="switch-row">
+                                <div class="switch-label">
+                                    <span class="l">Titel zentrieren</span>
+                                    <span class="h">centerTitle = true</span>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="appBarCenterTitle" onchange="updateAll()">
+                                    <span class="switch-slider"></span>
+                                </label>
+                            </div>
+                            <div class="color-row color-group">
+                                <div class="color-label">
+                                    <span class="color-label-text">Titel-Farbe</span>
+                                    <span class="color-label-hint">AppBar-Überschrift</span>
+                                </div>
+                                <input type="color" id="appBarTitleColorColor" value="#000000"
+                                    oninput="onAccentColorChange('appBarTitleColor')">
+                                <input type="text" id="appBarTitleColorHex" class="hex-input"
+                                    placeholder="(leer = Default)" oninput="onAccentHexChange('appBarTitleColor')">
+                            </div>
+                            <div class="color-row color-group">
+                                <div class="color-label">
+                                    <span class="color-label-text">Icon-Farbe</span>
+                                    <span class="color-label-hint">Burger-/Back-Icon in der AppBar</span>
+                                </div>
+                                <input type="color" id="appBarIconColorColor" value="#000000"
+                                    oninput="onAccentColorChange('appBarIconColor')">
+                                <input type="text" id="appBarIconColorHex" class="hex-input"
+                                    placeholder="(leer = Default)" oninput="onAccentHexChange('appBarIconColor')">
+                            </div>
+                        </div>
+
+                        <!-- Bottom Bar -->
+                        <div class="accent-block">
+                            <h4 class="accent-heading">🧭 Bottom-Bar</h4>
+                            <small class="accent-sub">Die schwebende Glas-Leiste am unteren Rand. Leere Farbfelder
+                                → App-Defaults (Surface bzw. onSurfaceVariant).</small>
+                            <div class="form-stack">
+                                <label>Transparenz-Stärke</label>
+                                <div class="range-row">
+                                    <input type="range" id="bottomBarAlpha" min="0.3" max="1" step="0.05"
+                                        value="0.55" oninput="updateAll()">
+                                    <span class="range-value" id="bottomBarAlphaValue">0.55</span>
+                                </div>
+                                <small>Niedriger = durchsichtiger. App-Default ist 0.55.</small>
+                            </div>
+                            <div class="color-row color-group">
+                                <div class="color-label">
+                                    <span class="color-label-text">Grundfarbe</span>
+                                    <span class="color-label-hint">Bar-Farbe vor Transparenz (z.B. leicht pink)</span>
+                                </div>
+                                <input type="color" id="bottomBarColorColor" value="#000000"
+                                    oninput="onAccentColorChange('bottomBarColor')">
+                                <input type="text" id="bottomBarColorHex" class="hex-input"
+                                    placeholder="(leer = Default)" oninput="onAccentHexChange('bottomBarColor')">
+                            </div>
+                            <div class="color-row color-group">
+                                <div class="color-label">
+                                    <span class="color-label-text">Icon-Farbe</span>
+                                    <span class="color-label-hint">tune/apps/tools/settings-Icons</span>
+                                </div>
+                                <input type="color" id="bottomBarIconColorColor" value="#000000"
+                                    oninput="onAccentColorChange('bottomBarIconColor')">
+                                <input type="text" id="bottomBarIconColorHex" class="hex-input"
+                                    placeholder="(leer = Default)" oninput="onAccentHexChange('bottomBarIconColor')">
+                            </div>
+                        </div>
+
+                        <!-- Input -->
+                        <div class="accent-block">
+                            <h4 class="accent-heading">🔍 Suchfeld / Input</h4>
+                            <div class="color-row color-group">
+                                <div class="color-label">
+                                    <span class="color-label-text">Hint-Farbe</span>
+                                    <span class="color-label-hint">Placeholder-Text</span>
+                                </div>
+                                <input type="color" id="inputHintColorColor" value="#000000"
+                                    oninput="onAccentColorChange('inputHintColor')">
+                                <input type="text" id="inputHintColorHex" class="hex-input"
+                                    placeholder="(leer = Default)" oninput="onAccentHexChange('inputHintColor')">
+                            </div>
+                            <div class="color-row color-group">
+                                <div class="color-label">
+                                    <span class="color-label-text">Prefix-Icon-Farbe</span>
+                                    <span class="color-label-hint">🔍-Symbol vor dem Input</span>
+                                </div>
+                                <input type="color" id="inputPrefixIconColorColor" value="#000000"
+                                    oninput="onAccentColorChange('inputPrefixIconColor')">
+                                <input type="text" id="inputPrefixIconColorHex" class="hex-input"
+                                    placeholder="(leer = Default)" oninput="onAccentHexChange('inputPrefixIconColor')">
+                            </div>
+                            <div class="color-row color-group">
+                                <div class="color-label">
+                                    <span class="color-label-text">Focus-Border</span>
+                                    <span class="color-label-hint">Rand bei aktivem Input</span>
+                                </div>
+                                <input type="color" id="inputFocusedBorderColorColor" value="#000000"
+                                    oninput="onAccentColorChange('inputFocusedBorderColor')">
+                                <input type="text" id="inputFocusedBorderColorHex" class="hex-input"
+                                    placeholder="(leer = Default)"
+                                    oninput="onAccentHexChange('inputFocusedBorderColor')">
+                            </div>
+                        </div>
+
+                        <!-- Dialog -->
+                        <div class="accent-block">
+                            <h4 class="accent-heading">💬 Dialog</h4>
+                            <div class="color-row color-group">
+                                <div class="color-label">
+                                    <span class="color-label-text">Titel-Farbe</span>
+                                    <span class="color-label-hint">Dialog-Header (z.B. "Bestätigen?")</span>
+                                </div>
+                                <input type="color" id="dialogTitleColorColor" value="#000000"
+                                    oninput="onAccentColorChange('dialogTitleColor')">
+                                <input type="text" id="dialogTitleColorHex" class="hex-input"
+                                    placeholder="(leer = Default)" oninput="onAccentHexChange('dialogTitleColor')">
+                            </div>
+                        </div>
+
+                        <!-- Text-Akzente -->
+                        <div class="accent-block">
+                            <h4 class="accent-heading">✍️ Text-Akzente</h4>
+                            <small class="accent-sub">Headline-/Titel-Farben überschreiben das Material-Default
+                                (= onSurface). Hier glänzen die Cyberpunk-/Sakura-Looks.</small>
+                            <div class="color-row color-group">
+                                <div class="color-label">
+                                    <span class="color-label-text">Headline Small</span>
+                                    <span class="color-label-hint">große Überschriften</span>
+                                </div>
+                                <input type="color" id="headlineSmallColorColor" value="#000000"
+                                    oninput="onAccentColorChange('headlineSmallColor')">
+                                <input type="text" id="headlineSmallColorHex" class="hex-input"
+                                    placeholder="(leer = Default)" oninput="onAccentHexChange('headlineSmallColor')">
+                            </div>
+                            <div class="color-row color-group">
+                                <div class="color-label">
+                                    <span class="color-label-text">Title Medium</span>
+                                    <span class="color-label-hint">Karten-Titel, Section-Headers</span>
+                                </div>
+                                <input type="color" id="titleMediumColorColor" value="#000000"
+                                    oninput="onAccentColorChange('titleMediumColor')">
+                                <input type="text" id="titleMediumColorHex" class="hex-input"
+                                    placeholder="(leer = Default)" oninput="onAccentHexChange('titleMediumColor')">
+                            </div>
+                            <div class="color-row color-group">
+                                <div class="color-label">
+                                    <span class="color-label-text">Body Medium</span>
+                                    <span class="color-label-hint">Standard-Body-Text</span>
+                                </div>
+                                <input type="color" id="bodyMediumColorColor" value="#000000"
+                                    oninput="onAccentColorChange('bodyMediumColor')">
+                                <input type="text" id="bodyMediumColorHex" class="hex-input"
+                                    placeholder="(leer = Default)" oninput="onAccentHexChange('bodyMediumColor')">
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- 5. JSON-Preview -->
+                <details>
+                    <summary>
+                        <span><span class="summary-num">05</span>JSON-Vorschau <span
+                                class="summary-tag">Live</span></span>
+                    </summary>
+                    <div class="details-content">
+                        <div class="json-preview" id="jsonPreview"></div>
+                        <div class="btn-row">
+                            <button class="btn btn-secondary" onclick="copyJSON()">📋 In Zwischenablage</button>
+                        </div>
+                    </div>
+                </details>
+
+                <div class="btn-row">
+                    <button class="btn btn-large" onclick="downloadJSON()">
+                        💾 Als JSON-Datei herunterladen
+                    </button>
+                </div>
+
+            </section>
+
+            <!-- ===== RECHTES PANEL: VORSCHAU ===== -->
+            <aside class="panel panel-preview" id="previewPanel">
+
+                <h3
+                    style="font-size: 0.85rem; color: var(--secondary-text-color); letter-spacing: 0.08em; margin-bottom: 1rem;">
+                    <span style="color: var(--secondary-light);">►</span> LIVE VORSCHAU
+                </h3>
+
+                <div class="preview-tabs" role="tablist" aria-label="Vorschau-Ansicht">
+                    <button class="preview-tab active" data-view="shelf" onclick="setPreviewView('shelf')">
+                        <span class="icon">📚</span><span>Regal</span>
+                    </button>
+                    <button class="preview-tab" data-view="grid" onclick="setPreviewView('grid')">
+                        <span class="icon">▦</span><span>Raster</span>
+                    </button>
+                    <button class="preview-tab" data-view="list" onclick="setPreviewView('list')">
+                        <span class="icon">≡</span><span>Liste</span>
+                    </button>
+                    <button class="preview-tab" data-view="components" onclick="setPreviewView('components')">
+                        <span class="icon">◧</span><span>Bausteine</span>
+                    </button>
+                </div>
+
+                <div class="phone-frame">
+                    <div class="pv-wrap">
+
+                        <!-- AppBar -->
+                        <div class="pv-appbar">
+                            <div class="pv-search">
+                                <span class="pv-search-icon">🔍</span>
+                                <span class="pv-search-text">Meine Sammlung durchsuchen</span>
+                                <span class="pv-search-action">⋮</span>
+                            </div>
+                        </div>
+
+                        <!-- Scrollbarer Content -->
+                        <div class="pv-content">
+
+                            <!-- 1. REGAL -->
+                            <div id="view-shelf" class="pv-shelf">
+                                <div class="pv-shelf-row">
+                                    <div class="pv-spine"
+                                        style="left: 14px; height: 92px; background-color: var(--pv-primary);">Vol. 1
+                                    </div>
+                                    <div class="pv-spine"
+                                        style="left: 50px; height: 80px; background-color: var(--pv-secondary);">Vol. 2
+                                    </div>
+                                    <div class="pv-spine"
+                                        style="left: 86px; height: 88px; background-color: var(--pv-tertiary);">Vol. 3
+                                    </div>
+                                    <div class="pv-spine"
+                                        style="left: 122px; height: 75px; background-color: var(--pv-primary-container); color: var(--pv-on-primary-container);">
+                                        Vol. 4</div>
+                                    <div class="pv-spine"
+                                        style="left: 158px; height: 90px; background-color: var(--pv-secondary-container); color: var(--pv-on-secondary-container);">
+                                        Vol. 5</div>
+                                    <div class="pv-spine"
+                                        style="left: 194px; height: 84px; background-color: var(--pv-primary);">Vol. 6
+                                    </div>
+                                    <div class="pv-shelf-board"></div>
+                                </div>
+                                <div class="pv-shelf-row">
+                                    <div class="pv-spine"
+                                        style="right: 14px; height: 86px; background-color: var(--pv-tertiary-container); color: var(--pv-on-tertiary-container);">
+                                        Vol. 1</div>
+                                    <div class="pv-spine"
+                                        style="right: 50px; height: 78px; background-color: var(--pv-tertiary);">Vol. 2
+                                    </div>
+                                    <div class="pv-spine"
+                                        style="right: 86px; height: 92px; background-color: var(--pv-primary);">Vol. 3
+                                    </div>
+                                    <div class="pv-spine"
+                                        style="right: 122px; height: 80px; background-color: var(--pv-secondary);">Vol.
+                                        4</div>
+                                    <div class="pv-shelf-board"></div>
+                                </div>
+                            </div>
+
+                            <!-- 2. RASTER -->
+                            <div id="view-grid" class="pv-grid" style="display: none;">
+                                <div class="pv-grid-item cover-1 selected">
+                                    <div class="gi-title">Magilumiere</div>
+                                    <div class="gi-vol">Vol. 1</div>
+                                </div>
+                                <div class="pv-grid-item cover-2">
+                                    <div class="gi-title">Sakamoto</div>
+                                    <div class="gi-vol">Vol. 8</div>
+                                </div>
+                                <div class="pv-grid-item cover-3">
+                                    <div class="gi-title">Bleach</div>
+                                    <div class="gi-vol">Vol. 5</div>
+                                </div>
+                                <div class="pv-grid-item cover-1">
+                                    <div class="gi-title">One Piece</div>
+                                    <div class="gi-vol">Vol. 102</div>
+                                </div>
+                                <div class="pv-grid-item cover-2">
+                                    <div class="gi-title">Tokyo Ghoul</div>
+                                    <div class="gi-vol">Vol. 10</div>
+                                </div>
+                                <div class="pv-grid-item cover-3">
+                                    <div class="gi-title">Naruto</div>
+                                    <div class="gi-vol">Vol. 72</div>
+                                </div>
+                            </div>
+
+                            <!-- 3. LISTE -->
+                            <div id="view-list" class="pv-list" style="display: none;">
+                                <div class="pv-list-item active">
+                                    <div class="pv-list-cover c1"></div>
+                                    <div class="pv-list-info">
+                                        <div class="pv-list-title">Magilumiere Inc. — Vol. 1</div>
+                                        <div class="pv-list-sub">Sasaki Kanata · Carlsen</div>
+                                        <div>
+                                            <span class="pv-list-chip">Manga</span>
+                                            <span
+                                                style="color: var(--premium-color); font-size: 0.7rem; letter-spacing: 1px;">★★★★☆</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pv-list-item">
+                                    <div class="pv-list-cover c2"></div>
+                                    <div class="pv-list-info">
+                                        <div class="pv-list-title">Sakamoto Days — Vol. 8</div>
+                                        <div class="pv-list-sub">Yuto Suzuki · Kazé</div>
+                                        <div>
+                                            <span class="pv-list-chip">Manga</span>
+                                            <span
+                                                style="color: var(--premium-color); font-size: 0.7rem; letter-spacing: 1px;">★★★★★</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pv-list-item">
+                                    <div class="pv-list-cover c3"></div>
+                                    <div class="pv-list-info">
+                                        <div class="pv-list-title">Bleach — Vol. 5</div>
+                                        <div class="pv-list-sub">Tite Kubo · Tokyopop</div>
+                                        <div>
+                                            <span class="pv-list-chip">Manga</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pv-list-item">
+                                    <div class="pv-list-cover c1"></div>
+                                    <div class="pv-list-info">
+                                        <div class="pv-list-title">Akira — Part 1</div>
+                                        <div class="pv-list-sub">Katsuhiro Otomo · Carlsen</div>
+                                        <div>
+                                            <span class="pv-list-chip">Comic</span>
+                                            <span
+                                                style="color: var(--premium-color); font-size: 0.7rem; letter-spacing: 1px;">★★★★★</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. BAUSTEINE -->
+                            <div id="view-components" class="pv-components" style="display: none;">
+
+                                <!-- Buttons -->
+                                <div class="pv-card">
+                                    <div class="pv-card-title">Buttons</div>
+                                    <div class="pv-btn-row">
+                                        <button class="pv-btn pv-btn-filled">Filled</button>
+                                        <button class="pv-btn pv-btn-tonal">Tonal</button>
+                                        <button class="pv-btn pv-btn-outline">Outlined</button>
+                                        <button class="pv-btn pv-btn-text">Text</button>
+                                    </div>
+                                </div>
+
+                                <!-- Chips -->
+                                <div class="pv-card">
+                                    <div class="pv-card-title">Chips & Tags</div>
+                                    <div class="pv-chips">
+                                        <div class="pv-chip">Manga</div>
+                                        <div class="pv-chip">Action</div>
+                                        <div class="pv-chip">Komödie</div>
+                                        <div class="pv-chip assist">+ Tag</div>
+                                    </div>
+                                </div>
+
+                                <!-- Text-Hierarchie -->
+                                <div class="pv-card">
+                                    <div class="pv-card-title">Buchdetails</div>
+                                    <div class="pv-card-body">
+                                        Diese Karte zeigt, wie sich Body-Text auf einer Surface liest.
+                                        Hier siehst du das Verhältnis zwischen Surface, On-Surface und
+                                        On-Surface-Variant.
+                                    </div>
+                                    <div class="pv-btn-row">
+                                        <button class="pv-btn pv-btn-filled">Lesen</button>
+                                        <button class="pv-btn pv-btn-text">Mehr Infos</button>
+                                    </div>
+                                </div>
+
+                                <!-- Snackbar -->
+                                <div class="pv-snackbar">
+                                    <span>Buch gespeichert</span>
+                                    <span class="pv-snackbar-action">Rückgängig</span>
+                                </div>
+
+                                <!-- Error Banner -->
+                                <div class="pv-error-banner">
+                                    <strong>Fehler:</strong> ISBN konnte nicht gefunden werden.
+                                </div>
+
+                                <!-- Color-Roles -->
+                                <div class="pv-roles">
+                                    <div class="role-block">
+                                        <h4>Primary-Familie</h4>
+                                        <div class="role-pair">
+                                            <div class="role-swatch"
+                                                style="background: var(--pv-primary); color: var(--pv-on-primary);">
+                                                <span class="role-name">primary</span>
+                                                <span class="role-hex" id="rh-pv-primary">—</span>
+                                            </div>
+                                            <div class="role-swatch"
+                                                style="background: var(--pv-primary-container); color: var(--pv-on-primary-container);">
+                                                <span class="role-name">container</span>
+                                                <span class="role-hex" id="rh-pv-primary-container">—</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="role-block">
+                                        <h4>Secondary-Familie</h4>
+                                        <div class="role-pair">
+                                            <div class="role-swatch"
+                                                style="background: var(--pv-secondary); color: var(--pv-on-secondary);">
+                                                <span class="role-name">secondary</span>
+                                                <span class="role-hex" id="rh-pv-secondary">—</span>
+                                            </div>
+                                            <div class="role-swatch"
+                                                style="background: var(--pv-secondary-container); color: var(--pv-on-secondary-container);">
+                                                <span class="role-name">container</span>
+                                                <span class="role-hex" id="rh-pv-secondary-container">—</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="role-block">
+                                        <h4>Tertiary-Familie</h4>
+                                        <div class="role-pair">
+                                            <div class="role-swatch"
+                                                style="background: var(--pv-tertiary); color: var(--pv-on-tertiary);">
+                                                <span class="role-name">tertiary</span>
+                                                <span class="role-hex" id="rh-pv-tertiary">—</span>
+                                            </div>
+                                            <div class="role-swatch"
+                                                style="background: var(--pv-tertiary-container); color: var(--pv-on-tertiary-container);">
+                                                <span class="role-name">container</span>
+                                                <span class="role-hex" id="rh-pv-tertiary-container">—</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Bottom Bar -->
+                        <div class="pv-bottom">
+                            <span class="pv-bottom-icon">🎚️</span>
+                            <span class="pv-bottom-icon">▦</span>
+                            <div class="pv-fab">+</div>
+                            <span class="pv-bottom-icon">🛠️</span>
+                            <span class="pv-bottom-icon">⚙</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <p
+                    style="margin-top: 1rem; font-size: 0.75rem; color: var(--secondary-text-color); text-align: center;">
+                    Tippe auf die Tabs oben, um zwischen den Ansichten zu wechseln.
+                </p>
+
+            </aside>
+        </div>
+    </main>
+
+    <div class="toast" id="toast">Erfolgreich kopiert</div>
+
+    <script>
+        // =========================================================
+        // KONFIGURATION — Farben mit Material-3-Slot-Definition
+        // =========================================================
+
+        const COLOR_DEFS = [
+            // === BASIC (5 Farben) — Einfach-Modus
+            { id: 'scaffoldBackground', label: 'Scaffold-Hintergrund', hint: 'Globaler App-Hintergrund', default: '#0f1416', mode: 'basic' },
+            { id: 'surface', label: 'Surface', hint: 'Karten, AppBar, Dialoge', default: '#1b2023', mode: 'basic' },
+            { id: 'primary', label: 'Primary', hint: 'Haupt-Akzent (Buttons, FAB-Iconfarbe)', default: '#b4c5ff', mode: 'basic' },
+            { id: 'secondary', label: 'Secondary', hint: 'Zweit-Akzent', default: '#8fcef3', mode: 'basic' },
+            { id: 'tertiary', label: 'Tertiary', hint: 'Dritt-Akzent (FAB-Hintergrund)', default: '#81d3df', mode: 'basic' },
+
+            // === STANDARD (zusätzliche 12 Farben) — Standard-Modus
+            { id: 'onSurface', label: 'On-Surface', hint: 'Text auf Surface', default: '#dee3e6', mode: 'standard', contrastWith: 'surface' },
+            { id: 'onPrimary', label: 'On-Primary', hint: 'Text auf Primary', default: '#1a2d60', mode: 'standard', contrastWith: 'primary' },
+            { id: 'onSecondary', label: 'On-Secondary', hint: 'Text auf Secondary', default: '#003549', mode: 'standard', contrastWith: 'secondary' },
+            { id: 'onTertiary', label: 'On-Tertiary', hint: 'Text auf Tertiary', default: '#00363c', mode: 'standard', contrastWith: 'tertiary' },
+            { id: 'primaryContainer', label: 'Primary Container', hint: 'Tonal-Buttons, Tags', default: '#324478', mode: 'standard' },
+            { id: 'onPrimaryContainer', label: 'On-Primary-Container', hint: 'Text in Primary-Containern', default: '#dbe1ff', mode: 'standard', contrastWith: 'primaryContainer' },
+            { id: 'secondaryContainer', label: 'Secondary Container', hint: 'z.B. ausgewählte Listenitems', default: '#004c68', mode: 'standard' },
+            { id: 'onSecondaryContainer', label: 'On-Secondary-Container', hint: 'Text in Sec-Container', default: '#c3e8ff', mode: 'standard', contrastWith: 'secondaryContainer' },
+            { id: 'tertiaryContainer', label: 'Tertiary Container', hint: 'Chips, Akzent-Container', default: '#004f57', mode: 'standard' },
+            { id: 'onTertiaryContainer', label: 'On-Tertiary-Container', hint: 'Text auf Tert-Container', default: '#9df0fb', mode: 'standard', contrastWith: 'tertiaryContainer' },
+            { id: 'outline', label: 'Outline', hint: 'Rahmen, Trennlinien', default: '#8f909a', mode: 'standard' },
+            { id: 'outlineVariant', label: 'Outline Variant', hint: 'Schwächere Trennlinien', default: '#45464f', mode: 'standard' },
+
+            // === EXPERT (zusätzliche Farben) — Experten-Modus
+            { id: 'onSurfaceVariant', label: 'On-Surface-Variant', hint: 'Sekundärtext, Hint-Texte', default: '#c5c6d0', mode: 'expert', contrastWith: 'surface' },
+            { id: 'surfaceContainerLowest', label: 'Surface Container Lowest', hint: 'Tiefste Container-Stufe', default: '#0a0f11', mode: 'expert' },
+            { id: 'surfaceContainerLow', label: 'Surface Container Low', hint: 'Niedrige Container-Stufe', default: '#171c1f', mode: 'expert' },
+            { id: 'surfaceContainer', label: 'Surface Container', hint: 'Standard-Container', default: '#1b2023', mode: 'expert' },
+            { id: 'surfaceContainerHigh', label: 'Surface Container High', hint: 'Höhere Elevation', default: '#252b2d', mode: 'expert' },
+            { id: 'surfaceContainerHighest', label: 'Surface Container Highest', hint: 'Höchste Elevation (Dialoge)', default: '#303638', mode: 'expert' },
+            { id: 'error', label: 'Error', hint: 'Fehlermeldungen', default: '#ffb4ab', mode: 'expert' },
+            { id: 'onError', label: 'On-Error', hint: 'Text auf Error', default: '#690005', mode: 'expert', contrastWith: 'error' },
+            { id: 'errorContainer', label: 'Error Container', hint: 'Error-Banner-Hintergrund', default: '#93000a', mode: 'expert' },
+            { id: 'onErrorContainer', label: 'On-Error-Container', hint: 'Text auf Error-Container', default: '#ffdad6', mode: 'expert', contrastWith: 'errorContainer' },
+            { id: 'inverseSurface', label: 'Inverse Surface', hint: 'Snackbar-Hintergrund', default: '#dee3e6', mode: 'expert' },
+            { id: 'inversePrimary', label: 'Inverse Primary', hint: 'Snackbar-Action-Color', default: '#4b5c92', mode: 'expert' },
+            { id: 'shadow', label: 'Shadow', hint: 'Elevation-Schatten', default: '#000000', mode: 'expert' },
+            { id: 'scrim', label: 'Scrim', hint: 'Modal-Overlay', default: '#000000', mode: 'expert' },
+            { id: 'surfaceTint', label: 'Surface Tint', hint: 'Tönung bei Elevation', default: '#b4c5ff', mode: 'expert' },
+        ];
+
+        const SHELF_DEFS = [
+            { id: 'shelfBackground', label: 'Regal-Hintergrund', hint: 'Bei Glas: meistens transparent/scaffold', default: '#0f1416' },
+            { id: 'shelfPrimary', label: 'Brett-Hauptfarbe', hint: 'Holz-Maserung oder Glas-Mittelfläche', default: '#283B50' },
+            { id: 'shelfLight', label: 'Glanzkante (oben)', hint: 'Highlight an Brett-Oberkante', default: '#4A6280' },
+            { id: 'shelfDark', label: 'Schattenkante (unten)', hint: 'Schatten an Brett-Unterkante', default: '#152030' },
+        ];
+
+        // Akzent-Farb-IDs (alle optional). Mapping: localID → CSS-Variable
+        // für die Live-Preview, plus die JSON-Pfad-Info für Export/Import.
+        const ACCENT_COLOR_DEFS = [
+            { id: 'appBarTitleColor', pvVar: '--pv-appbar-title', jsonBlock: 'appBar', jsonKey: 'titleColor' },
+            { id: 'appBarIconColor', pvVar: '--pv-appbar-icon', jsonBlock: 'appBar', jsonKey: 'iconColor' },
+            { id: 'bottomBarColor', pvVar: '--pv-bottom-bg', jsonBlock: 'bottomBar', jsonKey: 'color' },
+            { id: 'bottomBarIconColor', pvVar: '--pv-bottom-icon', jsonBlock: 'bottomBar', jsonKey: 'iconColor' },
+            { id: 'inputHintColor', pvVar: '--pv-search-hint', jsonBlock: 'input', jsonKey: 'hintColor' },
+            { id: 'inputPrefixIconColor', pvVar: '--pv-search-prefix-icon', jsonBlock: 'input', jsonKey: 'prefixIconColor' },
+            { id: 'inputFocusedBorderColor', pvVar: '--pv-input-focused-border', jsonBlock: 'input', jsonKey: 'focusedBorderColor' },
+            { id: 'dialogTitleColor', pvVar: null, jsonBlock: 'dialog', jsonKey: 'titleColor' },
+            { id: 'headlineSmallColor', pvVar: '--pv-headline-small', jsonBlock: 'textAccents', jsonKey: 'headlineSmall.color' },
+            { id: 'titleMediumColor', pvVar: '--pv-title-medium', jsonBlock: 'textAccents', jsonKey: 'titleMedium.color' },
+            { id: 'bodyMediumColor', pvVar: '--pv-body-medium', jsonBlock: 'textAccents', jsonKey: 'bodyMedium.color' },
+        ];
+
+        // =========================================================
+        // PRESETS
+        // =========================================================
+const PRESETS = {
+            // === KLASSISCHE THEMES (HOLZ) ===
+            lightBeech: {
+                themeName: 'Light Beech', themeEmoji: '🪵', brightness: 'light', alpha: 1.0, shelfStyle: 'wood',
+                colors: {
+                    scaffoldBackground: '#F5ECD7', surface: '#FFFFFF', primary: '#7C5E2C', secondary: '#9C7E4D', tertiary: '#5C6E3C',
+                    onSurface: '#1F1B14', onPrimary: '#FFFFFF', onSecondary: '#FFFFFF', onTertiary: '#FFFFFF',
+                    primaryContainer: '#FFDDB3', onPrimaryContainer: '#2A1A00',
+                    secondaryContainer: '#E8D6BC', onSecondaryContainer: '#2B1F0F',
+                    tertiaryContainer: '#DCEDB7', onTertiaryContainer: '#19200A',
+                    outline: '#857A6A', outlineVariant: '#D6CABE', onSurfaceVariant: '#4D4639',
+                    surfaceContainerHighest: '#EDE3D2', surfaceContainerHigh: '#F0E7D6',
+                    surfaceContainer: '#F5ECD7', surfaceContainerLow: '#F8F0DC', surfaceContainerLowest: '#FFFFFF',
+                    error: '#BA1A1A', onError: '#FFFFFF', errorContainer: '#FFDAD6', onErrorContainer: '#410002',
+                    inverseSurface: '#332F26', inversePrimary: '#F4BD7D', shadow: '#000000', scrim: '#000000', surfaceTint: '#7C5E2C'
+                },
+                shelf: { shelfBackground: '#F5ECD7', shelfPrimary: '#D4A96A', shelfLight: '#E8C98A', shelfDark: '#B8895A' },
+                bottomBarAlpha: 0.85,
+                accents: { bottomBarColor: '#F5ECD7', bottomBarIconColor: '#8B5A2B' }
+            },
+            darkOak: {
+                themeName: 'Dark Oak', themeEmoji: '🌲', brightness: 'dark', alpha: 1.0, shelfStyle: 'wood',
+                colors: {
+                    scaffoldBackground: '#1A130B', surface: '#241A0E', primary: '#F4BD7D', secondary: '#D8B388', tertiary: '#B5C988',
+                    onSurface: '#EDE0C8', onPrimary: '#42290B', onSecondary: '#3C2C18', onTertiary: '#212E0E',
+                    primaryContainer: '#5E3F0F', onPrimaryContainer: '#FFDDB3',
+                    secondaryContainer: '#553F26', onSecondaryContainer: '#F4DEB6',
+                    tertiaryContainer: '#384521', onTertiaryContainer: '#D1E59E',
+                    outline: '#9C8E78', outlineVariant: '#4F4534', onSurfaceVariant: '#D1C5AF',
+                    surfaceContainerHighest: '#3C3220', surfaceContainerHigh: '#332918',
+                    surfaceContainer: '#291F10', surfaceContainerLow: '#22180B', surfaceContainerLowest: '#0F0A00',
+                    error: '#FFB4AB', onError: '#690005', errorContainer: '#93000A', onErrorContainer: '#FFDAD6',
+                    inverseSurface: '#EDE0C8', inversePrimary: '#7C5E2C', shadow: '#000000', scrim: '#000000', surfaceTint: '#F4BD7D'
+                },
+                shelf: { shelfBackground: '#2C1A0E', shelfPrimary: '#6B3F1A', shelfLight: '#8B5A2B', shelfDark: '#4A2A0D' },
+                bottomBarAlpha: 0.8,
+                accents: { bottomBarColor: '#2C1A0E', bottomBarIconColor: '#D4A96A' }
+            },
+            noemBright: {
+                themeName: 'Noem Bright', themeEmoji: '🐇', brightness: 'light', alpha: 1.0, shelfStyle: 'wood',
+                colors: {
+                    scaffoldBackground: '#F5FAFD', surface: '#F5FAFD', primary: '#4B5C92', secondary: '#1B6585', tertiary: '#006973',
+                    onSurface: '#171C1F', onPrimary: '#FFFFFF', onSecondary: '#FFFFFF', onTertiary: '#FFFFFF',
+                    primaryContainer: '#DBE1FF', onPrimaryContainer: '#324478',
+                    secondaryContainer: '#C3E8FF', onSecondaryContainer: '#004C68',
+                    tertiaryContainer: '#9DF0FB', onTertiaryContainer: '#004F57',
+                    outline: '#757680', outlineVariant: '#C5C6D0', onSurfaceVariant: '#45464F',
+                    surfaceContainerHighest: '#DEE3E6', surfaceContainerHigh: '#E4E9EC',
+                    surfaceContainer: '#EAEFF1', surfaceContainerLow: '#EFF4F7', surfaceContainerLowest: '#FFFFFF',
+                    error: '#BA1A1A', onError: '#FFFFFF', errorContainer: '#FFDAD6', onErrorContainer: '#93000A',
+                    inverseSurface: '#2C3134', inversePrimary: '#B4C5FF', shadow: '#000000', scrim: '#000000', surfaceTint: '#4B5C92'
+                },
+                shelf: { shelfBackground: '#EBF1F6', shelfPrimary: '#A4B2C0', shelfLight: '#C5D0DB', shelfDark: '#6F7E8E' },
+                bottomBarAlpha: 0.8,
+                accents: { bottomBarColor: '#F5FAFD', bottomBarIconColor: '#4B5C92' }
+            },
+            noemDark: {
+                themeName: 'Noem Dark', themeEmoji: '🐇', brightness: 'dark', alpha: 1.0, shelfStyle: 'wood',
+                colors: {
+                    scaffoldBackground: '#0F1416', surface: '#0F1416', primary: '#B4C5FF', secondary: '#8FCEF3', tertiary: '#81D3DF',
+                    onSurface: '#DEE3E6', onPrimary: '#1A2D60', onSecondary: '#003549', onTertiary: '#00363C',
+                    primaryContainer: '#324478', onPrimaryContainer: '#DBE1FF',
+                    secondaryContainer: '#004C68', onSecondaryContainer: '#C3E8FF',
+                    tertiaryContainer: '#004F57', onTertiaryContainer: '#9DF0FB',
+                    outline: '#8F909A', outlineVariant: '#45464F', onSurfaceVariant: '#C5C6D0',
+                    surfaceContainerHighest: '#303638', surfaceContainerHigh: '#252B2D',
+                    surfaceContainer: '#1B2023', surfaceContainerLow: '#171C1F', surfaceContainerLowest: '#0A0F11',
+                    error: '#FFB4AB', onError: '#690005', errorContainer: '#93000A', onErrorContainer: '#FFDAD6',
+                    inverseSurface: '#DEE3E6', inversePrimary: '#4B5C92', shadow: '#000000', scrim: '#000000', surfaceTint: '#B4C5FF'
+                },
+                shelf: { shelfBackground: '#0E1722', shelfPrimary: '#283B50', shelfLight: '#4A6280', shelfDark: '#152030' },
+                bottomBarAlpha: 0.7,
+                accents: { bottomBarColor: '#0F1416', bottomBarIconColor: '#B4C5FF' }
+            },
+            matchaZen: {
+                themeName: 'Zen Bamboo', themeEmoji: '🍵', brightness: 'light', alpha: 1.0, shelfStyle: 'wood',
+                colors: {
+                    scaffoldBackground: '#EBE6D8', surface: '#F9F6F0', primary: '#556B2F', secondary: '#8A9A5B', tertiary: '#AEC07F',
+                    onSurface: '#2F3E2F', onPrimary: '#FFFFFF', onSecondary: '#FFFFFF', onTertiary: '#1A2411',
+                    primaryContainer: '#D6E8B0', onPrimaryContainer: '#1A2408',
+                    secondaryContainer: '#E8F5CD', onSecondaryContainer: '#262F16',
+                    tertiaryContainer: '#F2F8E1', onTertiaryContainer: '#354020',
+                    outline: '#8A9A5B', outlineVariant: '#C3D0A3', onSurfaceVariant: '#566650',
+                    surfaceContainerHighest: '#EBE6D8', surfaceContainerHigh: '#F0EADF',
+                    surfaceContainer: '#F5F0E6', surfaceContainerLow: '#F9F5EC', surfaceContainerLowest: '#FFFFFF',
+                    error: '#BA1A1A', onError: '#FFFFFF', errorContainer: '#FFDAD6', onErrorContainer: '#410002',
+                    inverseSurface: '#2F3E2F', inversePrimary: '#AEC07F', shadow: '#000000', scrim: '#000000', surfaceTint: '#556B2F'
+                },
+                shelf: { shelfBackground: '#EBE6D8', shelfPrimary: '#8A9A5B', shelfLight: '#AEC07F', shelfDark: '#556B2F' },
+                bottomBarAlpha: 0.8,
+                accents: { bottomBarColor: '#F9F6F0', bottomBarIconColor: '#556B2F' }
+            },
+            eInkManga: {
+                themeName: 'Manga Ink', themeEmoji: '✒️', brightness: 'light', alpha: 1.0, shelfStyle: 'wood',
+                colors: {
+                    scaffoldBackground: '#F7F7F7', surface: '#FFFFFF', primary: '#000000', secondary: '#212121', tertiary: '#616161',
+                    onSurface: '#000000', onPrimary: '#FFFFFF', onSecondary: '#FFFFFF', onTertiary: '#FFFFFF',
+                    primaryContainer: '#E0E0E0', onPrimaryContainer: '#000000',
+                    secondaryContainer: '#EEEEEE', onSecondaryContainer: '#212121',
+                    tertiaryContainer: '#F5F5F5', onTertiaryContainer: '#424242',
+                    outline: '#000000', outlineVariant: '#9E9E9E', onSurfaceVariant: '#424242',
+                    surfaceContainerHighest: '#E0E0E0', surfaceContainerHigh: '#EBEBEB',
+                    surfaceContainer: '#F5F5F5', surfaceContainerLow: '#FAFAFA', surfaceContainerLowest: '#FFFFFF',
+                    error: '#BA1A1A', onError: '#FFFFFF', errorContainer: '#FFDAD6', onErrorContainer: '#410002',
+                    inverseSurface: '#212121', inversePrimary: '#FFFFFF', shadow: '#000000', scrim: '#000000', surfaceTint: '#000000'
+                },
+                shelf: { shelfBackground: '#F7F7F7', shelfPrimary: '#E0E0E0', shelfLight: '#FFFFFF', shelfDark: '#9E9E9E' },
+                bottomBarAlpha: 0.85,
+                accents: { bottomBarColor: '#F7F7F7', bottomBarIconColor: '#000000' }
+            },
+
+            // === ANIME & GLAS THEMES ===
+            sakura: {
+                themeName: 'Anime Sakura', themeEmoji: '🌸', brightness: 'light', alpha: 0.9, shelfStyle: 'glass',
+                colors: {
+                    scaffoldBackground: '#FFF0F5', surface: '#FFFFFF', primary: '#FF66B2', secondary: '#40E0D0', tertiary: '#DDA0DD',
+                    onSurface: '#2D004B', onPrimary: '#FFFFFF', onSecondary: '#003333', onTertiary: '#FFFFFF',
+                    primaryContainer: '#FFD8EB', onPrimaryContainer: '#660033',
+                    secondaryContainer: '#B8F0E8', onSecondaryContainer: '#003D38',
+                    tertiaryContainer: '#F0E0F0', onTertiaryContainer: '#3D1A4D',
+                    outline: '#FFB6C1', outlineVariant: '#E1BEE7', onSurfaceVariant: '#5C3D6C',
+                    surfaceContainerHighest: '#F3E5F5', surfaceContainerHigh: '#F8ECF6',
+                    surfaceContainer: '#FCF1F8', surfaceContainerLow: '#FFF7FB', surfaceContainerLowest: '#FFFFFF',
+                    error: '#BA1A1A', onError: '#FFFFFF', errorContainer: '#FFDAD6', onErrorContainer: '#410002',
+                    inverseSurface: '#3D2240', inversePrimary: '#FFB0D0', shadow: '#000000', scrim: '#000000', surfaceTint: '#FF66B2'
+                },
+                shelf: { shelfBackground: '#FFF0F5', shelfPrimary: '#FFB6C1', shelfLight: '#FFE4E1', shelfDark: '#FFB6C1' },
+                bottomBarAlpha: 0.65,
+                accents: {
+                    bottomBarColor: '#FFF0F5',
+                    bottomBarIconColor: '#C71585',
+                    appBarCenterTitle: true,
+                    appBarTitleColor: '#C71585',
+                    appBarIconColor: '#C71585',
+                    inputHintColor: '#C71585',
+                    inputPrefixIconColor: '#C71585',
+                    inputFocusedBorderColor: '#FF66B2',
+                    dialogTitleColor: '#C71585',
+                    headlineSmallColor: '#C71585',
+                    titleMediumColor: '#4A148C',
+                    bodyMediumColor: '#2D004B'
+                }
+            },
+            cyber: {
+                themeName: 'Anime Cyber', themeEmoji: '🌌', brightness: 'dark', alpha: 0.85, shelfStyle: 'glass',
+                colors: {
+                    scaffoldBackground: '#0A1428', surface: '#1A2540', primary: '#4FC3F7', secondary: '#7C4DFF', tertiary: '#FF4081',
+                    onSurface: '#E3F2FD', onPrimary: '#050A18', onSecondary: '#FFFFFF', onTertiary: '#FFFFFF',
+                    primaryContainer: '#0D3F5C', onPrimaryContainer: '#B8E5FB',
+                    secondaryContainer: '#3E2A7A', onSecondaryContainer: '#D8C7FF',
+                    tertiaryContainer: '#7A1A3D', onTertiaryContainer: '#FFCEDB',
+                    outline: '#64B5F6', outlineVariant: '#4A6FA5', onSurfaceVariant: '#A8C0D8',
+                    surfaceContainerHighest: '#26334F', surfaceContainerHigh: '#202D48',
+                    surfaceContainer: '#1A2540', surfaceContainerLow: '#15203A', surfaceContainerLowest: '#0F1A30',
+                    error: '#FFB4AB', onError: '#690005', errorContainer: '#93000A', onErrorContainer: '#FFDAD6',
+                    inverseSurface: '#E3F2FD', inversePrimary: '#0277BD', shadow: '#000000', scrim: '#000000', surfaceTint: '#4FC3F7'
+                },
+                shelf: { shelfBackground: '#0A1428', shelfPrimary: '#4FC3F7', shelfLight: '#B3E5FC', shelfDark: '#1A2540' },
+                bottomBarAlpha: 0.6,
+                accents: {
+                    bottomBarColor: '#1A2540',
+                    bottomBarIconColor: '#4FC3F7',
+                    appBarCenterTitle: true,
+                    appBarTitleColor: '#4FC3F7',
+                    appBarIconColor: '#4FC3F7',
+                    inputHintColor: '#B3E5FC',
+                    inputPrefixIconColor: '#4FC3F7',
+                    inputFocusedBorderColor: '#4FC3F7',
+                    dialogTitleColor: '#4FC3F7',
+                    headlineSmallColor: '#4FC3F7',
+                    titleMediumColor: '#81D4FA',
+                    bodyMediumColor: '#E3F2FD'
+                }
+            },
+            cyberPop: {
+                themeName: 'Cyber Pop', themeEmoji: '🪩', brightness: 'light', alpha: 0.9, shelfStyle: 'glass',
+                colors: {
+                    scaffoldBackground: '#F0F4F8', surface: '#FFFFFF', primary: '#FFB300', secondary: '#00B8D4', tertiary: '#D500F9',
+                    onSurface: '#1A1A1A', onPrimary: '#000000', onSecondary: '#003333', onTertiary: '#FFFFFF',
+                    primaryContainer: '#FFE082', onPrimaryContainer: '#4D3600',
+                    secondaryContainer: '#B2EBF2', onSecondaryContainer: '#003E47',
+                    tertiaryContainer: '#F3E5F5', onTertiaryContainer: '#4A0072',
+                    outline: '#00E5FF', outlineVariant: '#84FFFF', onSurfaceVariant: '#4D4D4D',
+                    surfaceContainerHighest: '#E0F7FA', surfaceContainerHigh: '#E8F5E9',
+                    surfaceContainer: '#FFFFFF', surfaceContainerLow: '#FAFAFA', surfaceContainerLowest: '#FFFFFF',
+                    error: '#BA1A1A', onError: '#FFFFFF', errorContainer: '#FFDAD6', onErrorContainer: '#410002',
+                    inverseSurface: '#1A1A1A', inversePrimary: '#FFE082', shadow: '#000000', scrim: '#000000', surfaceTint: '#FFB300'
+                },
+                shelf: { shelfBackground: '#F0F4F8', shelfPrimary: '#FFB300', shelfLight: '#00B8D4', shelfDark: '#FFC400' },
+                bottomBarAlpha: 0.65,
+                accents: {
+                    bottomBarColor: '#E0F7FA',
+                    bottomBarIconColor: '#D500F9',
+                    appBarCenterTitle: true,
+                    appBarTitleColor: '#D500F9',
+                    appBarIconColor: '#D500F9',
+                    headlineSmallColor: '#D500F9'
+                }
+            },
+            toxicNeon: {
+                themeName: 'Toxic Neon', themeEmoji: '🦠', brightness: 'dark', alpha: 0.9, shelfStyle: 'glass',
+                colors: {
+                    scaffoldBackground: '#050505', surface: '#121212', primary: '#39FF14', secondary: '#9400D3', tertiary: '#D500F9',
+                    onSurface: '#E0E0E0', onPrimary: '#000000', onSecondary: '#FFFFFF', onTertiary: '#FFFFFF',
+                    primaryContainer: '#00E676', onPrimaryContainer: '#003311',
+                    secondaryContainer: '#4A148C', onSecondaryContainer: '#E1BEE7',
+                    tertiaryContainer: '#6A0080', onTertiaryContainer: '#F3E5F5',
+                    outline: '#39FF14', outlineVariant: '#4A148C', onSurfaceVariant: '#A0A0A0',
+                    surfaceContainerHighest: '#1E1E1E', surfaceContainerHigh: '#181818',
+                    surfaceContainer: '#121212', surfaceContainerLow: '#0D0D0D', surfaceContainerLowest: '#000000',
+                    error: '#FFB4AB', onError: '#690005', errorContainer: '#93000A', onErrorContainer: '#FFDAD6',
+                    inverseSurface: '#E0E0E0', inversePrimary: '#00E676', shadow: '#000000', scrim: '#000000', surfaceTint: '#39FF14'
+                },
+                shelf: { shelfBackground: '#050505', shelfPrimary: '#39FF14', shelfLight: '#9400D3', shelfDark: '#121212' },
+                bottomBarAlpha: 0.6,
+                accents: {
+                    bottomBarColor: '#121212',
+                    bottomBarIconColor: '#39FF14',
+                    appBarCenterTitle: true,
+                    appBarTitleColor: '#39FF14',
+                    appBarIconColor: '#39FF14',
+                    headlineSmallColor: '#39FF14'
+                }
+            },
+            gothicCrimson: {
+                themeName: 'Crimson Moon', themeEmoji: '🥀', brightness: 'dark', alpha: 0.9, shelfStyle: 'glass',
+                colors: {
+                    scaffoldBackground: '#050505', surface: '#1A0A0A', primary: '#DC143C', secondary: '#B8860B', tertiary: '#8B0000',
+                    onSurface: '#E0E0E0', onPrimary: '#FFFFFF', onSecondary: '#000000', onTertiary: '#FFFFFF',
+                    primaryContainer: '#8B0000', onPrimaryContainer: '#FFD1D1',
+                    secondaryContainer: '#5C4305', onSecondaryContainer: '#FCEFC7',
+                    tertiaryContainer: '#4A0000', onTertiaryContainer: '#FFD1D1',
+                    outline: '#8B0000', outlineVariant: '#4A0A0A', onSurfaceVariant: '#A0A0A0',
+                    surfaceContainerHighest: '#2D1414', surfaceContainerHigh: '#240F0F',
+                    surfaceContainer: '#1A0A0A', surfaceContainerLow: '#120505', surfaceContainerLowest: '#0A0000',
+                    error: '#FFB4AB', onError: '#690005', errorContainer: '#93000A', onErrorContainer: '#FFDAD6',
+                    inverseSurface: '#E0E0E0', inversePrimary: '#8B0000', shadow: '#000000', scrim: '#000000', surfaceTint: '#DC143C'
+                },
+                shelf: { shelfBackground: '#050505', shelfPrimary: '#DC143C', shelfLight: '#B8860B', shelfDark: '#1A0A0A' },
+                bottomBarAlpha: 0.6,
+                accents: {
+                    bottomBarColor: '#1A0A0A',
+                    bottomBarIconColor: '#DC143C',
+                    appBarCenterTitle: true,
+                    appBarTitleColor: '#DC143C',
+                    headlineSmallColor: '#DC143C',
+                    titleMediumColor: '#B8860B'
+                }
+            },
+            deepOcean: {
+                themeName: 'Deep Abyss', themeEmoji: '🐋', brightness: 'dark', alpha: 0.9, shelfStyle: 'glass',
+                colors: {
+                    scaffoldBackground: '#00102A', surface: '#002255', primary: '#00FFFF', secondary: '#FF7F50', tertiary: '#84FFFF',
+                    onSurface: '#E0F7FA', onPrimary: '#003333', onSecondary: '#4A1C0A', onTertiary: '#003333',
+                    primaryContainer: '#008B8B', onPrimaryContainer: '#E0FFFF',
+                    secondaryContainer: '#8B3A2B', onSecondaryContainer: '#FFDAB9',
+                    tertiaryContainer: '#005555', onTertiaryContainer: '#B2EBF2',
+                    outline: '#00FFFF', outlineVariant: '#006688', onSurfaceVariant: '#80DEEA',
+                    surfaceContainerHighest: '#003377', surfaceContainerHigh: '#002B66',
+                    surfaceContainer: '#002255', surfaceContainerLow: '#001A44', surfaceContainerLowest: '#001133',
+                    error: '#FFB4AB', onError: '#690005', errorContainer: '#93000A', onErrorContainer: '#FFDAD6',
+                    inverseSurface: '#E0F7FA', inversePrimary: '#008B8B', shadow: '#000000', scrim: '#000000', surfaceTint: '#00FFFF'
+                },
+                shelf: { shelfBackground: '#00102A', shelfPrimary: '#00FFFF', shelfLight: '#84FFFF', shelfDark: '#002255' },
+                bottomBarAlpha: 0.6,
+                accents: {
+                    bottomBarColor: '#002255',
+                    bottomBarIconColor: '#00FFFF',
+                    appBarCenterTitle: true,
+                    appBarTitleColor: '#00FFFF',
+                    headlineSmallColor: '#00FFFF',
+                    titleMediumColor: '#FF7F50'
+                }
+            },
+            vaporwave: {
+                themeName: 'Retro City', themeEmoji: '🌇', brightness: 'dark', alpha: 0.9, shelfStyle: 'glass',
+                colors: {
+                    scaffoldBackground: '#1E004B', surface: '#2A0845', primary: '#FF007F', secondary: '#00F0FF', tertiary: '#FF7900',
+                    onSurface: '#FFD1FF', onPrimary: '#4A0020', onSecondary: '#003333', onTertiary: '#4A2200',
+                    primaryContainer: '#8B0045', onPrimaryContainer: '#FFB3D9',
+                    secondaryContainer: '#006666', onSecondaryContainer: '#B3FFFF',
+                    tertiaryContainer: '#8B3E00', onTertiaryContainer: '#FFD9B3',
+                    outline: '#00F0FF', outlineVariant: '#008B8B', onSurfaceVariant: '#C299C2',
+                    surfaceContainerHighest: '#45186B', surfaceContainerHigh: '#3B125C',
+                    surfaceContainer: '#2A0845', surfaceContainerLow: '#1E0033', surfaceContainerLowest: '#120022',
+                    error: '#FFB4AB', onError: '#690005', errorContainer: '#93000A', onErrorContainer: '#FFDAD6',
+                    inverseSurface: '#FFD1FF', inversePrimary: '#8B0045', shadow: '#000000', scrim: '#000000', surfaceTint: '#FF007F'
+                },
+                shelf: { shelfBackground: '#1E004B', shelfPrimary: '#FF007F', shelfLight: '#FF7900', shelfDark: '#1E004B' },
+                bottomBarAlpha: 0.6,
+                accents: {
+                    bottomBarColor: '#2A0845',
+                    bottomBarIconColor: '#FF007F',
+                    appBarCenterTitle: true,
+                    appBarTitleColor: '#FF7900',
+                    appBarIconColor: '#FF007F',
+                    headlineSmallColor: '#FF7900',
+                    titleMediumColor: '#00F0FF'
+                }
+            }
+        };
+
+        // =========================================================
+        // STATE & RENDERING
+        // =========================================================
+
+        let currentMode = 'basic';
+        let currentView = 'shelf';
+
+        function camelToKebab(s) { return s.replace(/[A-Z]/g, m => '-' + m.toLowerCase()); }
+
+        function buildColorRow(def, kind) {
+            return `
+                <div class="color-row color-group" data-mode="${def.mode || 'basic'}" data-kind="${kind}">
+                    <div class="color-label">
+                        <span class="color-label-text">${def.label}</span>
+                        <span class="color-label-hint">${def.hint}</span>
+                        <span class="contrast-warn" id="warn-${def.id}">⚠ Niedriger Kontrast</span>
+                    </div>
+                    <input type="color" id="${def.id}Color" value="${def.default}"
+                        oninput="onColorChange('${def.id}')">
+                    <input type="text" id="${def.id}Hex" class="hex-input" value="${def.default.toUpperCase()}"
+                        oninput="onHexChange('${def.id}')">
+                </div>`;
+        }
+
+        function buildAllInputs() {
+            // Material colors — gruppiert nach Modus mit Group-Headers
+            const groups = {
+                'Hauptfarben': COLOR_DEFS.filter(c => c.mode === 'basic'),
+                'Container & Outlines': COLOR_DEFS.filter(c => c.mode === 'standard'),
+                'Surface-Stufen, Error, Inverse': COLOR_DEFS.filter(c => c.mode === 'expert')
+            };
+            let html = '';
+            for (const [groupName, list] of Object.entries(groups)) {
+                if (!list.length) continue;
+                html += `<div class="group-header" data-group="${list[0].mode}">${groupName}</div>`;
+                html += list.map(d => buildColorRow(d, 'material')).join('');
+            }
+            document.getElementById('materialColorsContainer').innerHTML = html;
+
+            // Shelf
+            document.getElementById('shelfColorsContainer').innerHTML =
+                SHELF_DEFS.map(d => buildColorRow(d, 'shelf')).join('');
+        }
+
+        function setColorMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.mode-tab').forEach(b => {
+                b.classList.toggle('active', b.dataset.mode === mode);
+            });
+            const visibility = {
+                basic: ['basic'],
+                standard: ['basic', 'standard'],
+                expert: ['basic', 'standard', 'expert']
+            };
+            const visible = visibility[mode];
+            document.querySelectorAll('.color-group[data-kind="material"]').forEach(el => {
+                el.classList.toggle('hidden', !visible.includes(el.dataset.mode));
+            });
+            document.querySelectorAll('.group-header[data-group]').forEach(el => {
+                el.classList.toggle('hidden', !visible.includes(el.dataset.group));
+            });
+            const hints = {
+                basic: '5 Hauptfarben — der Rest wird beim Export auf sinnvolle Defaults gesetzt.',
+                standard: '17 Farben — deckt 95% der typischen Theming-Anforderungen ab.',
+                expert: 'Alle Material-3-Slots — volle Kontrolle über Surface-Stufen, Inverse und Error-Container.'
+            };
+            document.getElementById('modeHint').textContent = hints[mode];
+        }
+
+        // === Color sync ===
+        function onColorChange(id) {
+            const c = document.getElementById(id + 'Color').value;
+            document.getElementById(id + 'Hex').value = c.toUpperCase();
+            updateAll();
+        }
+
+        function onHexChange(id) {
+            let h = document.getElementById(id + 'Hex').value.trim();
+            if (!h.startsWith('#')) h = '#' + h;
+            if (/^#[0-9A-F]{6}$/i.test(h)) {
+                document.getElementById(id + 'Color').value = h;
+                document.getElementById(id + 'Hex').value = h.toUpperCase();
+                updateAll();
+            }
+        }
+
+        // === Accent-Color sync (optional fields) ===
+        // Akzent-Felder verhalten sich anders als die Material-Farben:
+        // Der Hex-Input darf leer sein → kein Override, fällt auf Material-Default zurück.
+        // Der Color-Picker hat zwar immer einen Wert (Browser-Limit), aber wir lesen
+        // ausschließlich den Hex-Input als Quelle der Wahrheit.
+        function onAccentColorChange(id) {
+            const c = document.getElementById(id + 'Color').value;
+            document.getElementById(id + 'Hex').value = c.toUpperCase();
+            updateAll();
+        }
+
+        function onAccentHexChange(id) {
+            let h = document.getElementById(id + 'Hex').value.trim();
+            if (h === '') {
+                // Leer = unset → keine weitere Sync, einfach updaten
+                updateAll();
+                return;
+            }
+            if (!h.startsWith('#')) h = '#' + h;
+            if (/^#[0-9A-F]{6}$/i.test(h)) {
+                document.getElementById(id + 'Color').value = h;
+                document.getElementById(id + 'Hex').value = h.toUpperCase();
+                updateAll();
+            }
+        }
+
+        function getAccentHex(id) {
+            const v = document.getElementById(id + 'Hex').value.trim();
+            if (!/^#[0-9A-F]{6}$/i.test(v)) return null;
+            return v.toUpperCase();
+        }
+
+        function setAccentHex(id, hex) {
+            const hexInput = document.getElementById(id + 'Hex');
+            const colorInput = document.getElementById(id + 'Color');
+            if (!hexInput || !colorInput) return;
+            if (!hex) {
+                hexInput.value = '';
+                // Color-Input behält irgendeinen Wert (Browser-Limit), aber er
+                // wird in getAccentHex() ohnehin ignoriert, weil der Hex leer ist.
+                return;
+            }
+            hexInput.value = hex.toUpperCase();
+            colorInput.value = hex;
+        }
+
+        // === Brightness change reasonable defaults ===
+        function onBrightnessChanged() {
+            // Brightness alleine ändert keine Farben automatisch — ist aber im JSON-Export wichtig
+            updateAll();
+        }
+
+        // =========================================================
+        // PREVIEW UPDATING
+        // =========================================================
+
+        function getColor(id) {
+            return document.getElementById(id + 'Color').value;
+        }
+
+        function updatePreviewColors() {
+            const root = document.documentElement;
+            const alpha = parseFloat(document.getElementById('alphaSlider').value);
+            document.getElementById('alphaValue').textContent = alpha.toFixed(2);
+            root.style.setProperty('--pv-surface-overlay-alpha', alpha);
+
+            const barAlpha = parseFloat(document.getElementById('bottomBarAlpha').value);
+            document.getElementById('bottomBarAlphaValue').textContent = barAlpha.toFixed(2);
+            root.style.setProperty('--pv-bottom-alpha', barAlpha);
+
+            const map = {
+                'pv-scaffold': 'scaffoldBackground',
+                'pv-surface': 'surface',
+                'pv-surface-container-low': 'surfaceContainerLow',
+                'pv-surface-container': 'surfaceContainer',
+                'pv-surface-container-high': 'surfaceContainerHigh',
+                'pv-surface-container-highest': 'surfaceContainerHighest',
+                'pv-primary': 'primary',
+                'pv-on-primary': 'onPrimary',
+                'pv-primary-container': 'primaryContainer',
+                'pv-on-primary-container': 'onPrimaryContainer',
+                'pv-secondary': 'secondary',
+                'pv-on-secondary': 'onSecondary',
+                'pv-secondary-container': 'secondaryContainer',
+                'pv-on-secondary-container': 'onSecondaryContainer',
+                'pv-tertiary': 'tertiary',
+                'pv-on-tertiary': 'onTertiary',
+                'pv-tertiary-container': 'tertiaryContainer',
+                'pv-on-tertiary-container': 'onTertiaryContainer',
+                'pv-error': 'error',
+                'pv-on-error': 'onError',
+                'pv-error-container': 'errorContainer',
+                'pv-on-error-container': 'onErrorContainer',
+                'pv-on-surface': 'onSurface',
+                'pv-on-surface-variant': 'onSurfaceVariant',
+                'pv-outline': 'outline',
+                'pv-outline-variant': 'outlineVariant',
+                'pv-inverse-surface': 'inverseSurface',
+                'pv-inverse-primary': 'inversePrimary',
+                'pv-shelf-bg': 'shelfBackground',
+                'pv-shelf-primary': 'shelfPrimary',
+                'pv-shelf-light': 'shelfLight',
+                'pv-shelf-dark': 'shelfDark'
+            };
+
+            for (const [cssVar, defId] of Object.entries(map)) {
+                const el = document.getElementById(defId + 'Color');
+                if (el) {
+                    root.style.setProperty('--' + cssVar, el.value);
+                }
+            }
+
+            // === Akzent-Variablen — falls leer, Property entfernen, damit
+            // der Default-Fallback (var(--pv-on-surface) etc.) greift.
+            ACCENT_COLOR_DEFS.forEach(def => {
+                if (!def.pvVar) return;
+                const hex = getAccentHex(def.id);
+                if (hex) {
+                    root.style.setProperty(def.pvVar, hex);
+                } else {
+                    root.style.removeProperty(def.pvVar);
+                }
+            });
+
+            // Update color-role hex labels
+            const roleIds = ['primary', 'primary-container', 'secondary', 'secondary-container', 'tertiary', 'tertiary-container'];
+            roleIds.forEach(r => {
+                const el = document.getElementById('rh-pv-' + r);
+                if (el) {
+                    const cssVal = getComputedStyle(root).getPropertyValue('--pv-' + r).trim();
+                    el.textContent = cssVal.toUpperCase();
+                }
+            });
+        }
+
+        // === Kontrast-Check (WCAG-vereinfacht) ===
+        function relativeLuminance(hex) {
+            const r = parseInt(hex.slice(1, 3), 16) / 255;
+            const g = parseInt(hex.slice(3, 5), 16) / 255;
+            const b = parseInt(hex.slice(5, 7), 16) / 255;
+            const f = c => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+            return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+        }
+
+        function contrastRatio(hex1, hex2) {
+            const l1 = relativeLuminance(hex1);
+            const l2 = relativeLuminance(hex2);
+            const lighter = Math.max(l1, l2);
+            const darker = Math.min(l1, l2);
+            return (lighter + 0.05) / (darker + 0.05);
+        }
+
+        function updateContrastWarnings() {
+            COLOR_DEFS.forEach(def => {
+                if (!def.contrastWith) return;
+                const fg = getColor(def.id);
+                const bgEl = document.getElementById(def.contrastWith + 'Color');
+                if (!bgEl) return;
+                const bg = bgEl.value;
+                const ratio = contrastRatio(fg, bg);
+                const warn = document.getElementById('warn-' + def.id);
+                if (warn) {
+                    // WCAG AA für Body-Text = 4.5, für Large = 3.0
+                    warn.classList.toggle('show', ratio < 4.5);
+                    warn.title = `Kontrast: ${ratio.toFixed(2)}:1 — empfohlen: ≥ 4.5:1 (WCAG AA)`;
+                }
+            });
+        }
+
+        // =========================================================
+        // VIEWS
+        // =========================================================
+
+        function setPreviewView(view) {
+            currentView = view;
+            document.querySelectorAll('.preview-tab').forEach(b => {
+                b.classList.toggle('active', b.dataset.view === view);
+            });
+            document.getElementById('view-shelf').style.display = view === 'shelf' ? 'flex' : 'none';
+            document.getElementById('view-grid').style.display = view === 'grid' ? 'grid' : 'none';
+            document.getElementById('view-list').style.display = view === 'list' ? 'flex' : 'none';
+            document.getElementById('view-components').style.display = view === 'components' ? 'flex' : 'none';
+        }
+
+        // =========================================================
+        // PRESETS LADEN
+        // =========================================================
+
+        function loadPreset() {
+            const key = document.getElementById('presetSelector').value;
+            if (key === 'custom') return;
+            const p = PRESETS[key];
+            if (!p) return;
+
+            document.getElementById('themeName').value = p.themeName;
+            document.getElementById('themeEmoji').value = p.themeEmoji;
+            document.getElementById('brightness').value = p.brightness;
+            document.getElementById('alphaSlider').value = p.alpha;
+            document.getElementById('shelfStyle').value = p.shelfStyle;
+
+            // Material-Farben
+            COLOR_DEFS.forEach(def => {
+                const val = (p.colors[def.id] || def.default).toUpperCase();
+                document.getElementById(def.id + 'Color').value = val;
+                document.getElementById(def.id + 'Hex').value = val;
+            });
+
+            // Shelf
+            SHELF_DEFS.forEach(def => {
+                const val = ((p.shelf && p.shelf[def.id]) || def.default).toUpperCase();
+                document.getElementById(def.id + 'Color').value = val;
+                document.getElementById(def.id + 'Hex').value = val;
+            });
+
+            // Akzent-Felder aus Preset (alle optional — leer wenn im Preset
+            // nicht gesetzt). Akzente liegen unter `accents` im Preset.
+            const a = p.accents || {};
+            ACCENT_COLOR_DEFS.forEach(def => {
+                setAccentHex(def.id, a[def.id] || null);
+            });
+            document.getElementById('appBarCenterTitle').checked = !!a.appBarCenterTitle;
+            document.getElementById('bottomBarAlpha').value =
+                typeof p.bottomBarAlpha === 'number' ? p.bottomBarAlpha : 0.55;
+
+            updateAll();
+        }
+
+        function resetAll() {
+            document.getElementById('themeName').value = 'Mein Theme';
+            document.getElementById('themeEmoji').value = '🎨';
+            document.getElementById('brightness').value = 'dark';
+            document.getElementById('alphaSlider').value = 1.0;
+            document.getElementById('shelfStyle').value = 'wood';
+            document.getElementById('presetSelector').value = 'custom';
+
+            COLOR_DEFS.forEach(def => {
+                document.getElementById(def.id + 'Color').value = def.default;
+                document.getElementById(def.id + 'Hex').value = def.default.toUpperCase();
+            });
+            SHELF_DEFS.forEach(def => {
+                document.getElementById(def.id + 'Color').value = def.default;
+                document.getElementById(def.id + 'Hex').value = def.default.toUpperCase();
+            });
+
+            // Akzente alle leeren
+            ACCENT_COLOR_DEFS.forEach(def => setAccentHex(def.id, null));
+            document.getElementById('appBarCenterTitle').checked = false;
+            document.getElementById('bottomBarAlpha').value = 0.55;
+
+            updateAll();
+        }
+
+        // =========================================================
+        // JSON EXPORT / IMPORT
+        // =========================================================
+
+        function buildThemeData() {
+            const name = document.getElementById('themeName').value || 'Custom Theme';
+            const safeId = 'custom_' + name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+
+            const materialColors = {};
+            COLOR_DEFS.forEach(def => {
+                materialColors[def.id] = getColor(def.id).toUpperCase();
+            });
+
+            const shelfPalette = {
+                background: getColor('shelfBackground').toUpperCase(),
+                primary: getColor('shelfPrimary').toUpperCase(),
+                light: getColor('shelfLight').toUpperCase(),
+                dark: getColor('shelfDark').toUpperCase()
+            };
+
+            const data = {
+                id: safeId,
+                displayName: name,
+                emoji: document.getElementById('themeEmoji').value || '🎨',
+                brightness: document.getElementById('brightness').value,
+                shelfStyle: document.getElementById('shelfStyle').value,
+                surfaceOverlayAlpha: parseFloat(document.getElementById('alphaSlider').value),
+                shelfPalette: shelfPalette,
+                materialColors: materialColors
+            };
+
+            // === Akzent-Blöcke nur dann ins JSON, wenn auch wirklich
+            // Werte gesetzt sind. Leere Akzentfelder werden weggelassen,
+            // damit das JSON kompakt bleibt und nicht-gesetzte Felder
+            // klar erkennbar sind.
+            const blocks = {};
+
+            // AppBar
+            const appBarTitleColor = getAccentHex('appBarTitleColor');
+            const appBarIconColor = getAccentHex('appBarIconColor');
+            const centerTitle = document.getElementById('appBarCenterTitle').checked;
+            if (appBarTitleColor || appBarIconColor || centerTitle) {
+                blocks.appBar = {};
+                if (centerTitle) blocks.appBar.centerTitle = true;
+                if (appBarTitleColor) blocks.appBar.titleColor = appBarTitleColor;
+                if (appBarIconColor) blocks.appBar.iconColor = appBarIconColor;
+            }
+
+            // Bottom-Bar (alpha nur wenn vom App-Default 0.55 abweichend)
+            const bottomBarColor = getAccentHex('bottomBarColor');
+            const bottomBarIconColor = getAccentHex('bottomBarIconColor');
+            const bottomBarAlpha = parseFloat(document.getElementById('bottomBarAlpha').value);
+            if (bottomBarColor || bottomBarIconColor || bottomBarAlpha !== 0.55) {
+                blocks.bottomBar = {};
+                if (bottomBarAlpha !== 0.55) blocks.bottomBar.alpha = bottomBarAlpha;
+                if (bottomBarColor) blocks.bottomBar.color = bottomBarColor;
+                if (bottomBarIconColor) blocks.bottomBar.iconColor = bottomBarIconColor;
+            }
+
+            // Input
+            const inputHint = getAccentHex('inputHintColor');
+            const inputPrefix = getAccentHex('inputPrefixIconColor');
+            const inputFocus = getAccentHex('inputFocusedBorderColor');
+            if (inputHint || inputPrefix || inputFocus) {
+                blocks.input = {};
+                if (inputHint) blocks.input.hintColor = inputHint;
+                if (inputPrefix) blocks.input.prefixIconColor = inputPrefix;
+                if (inputFocus) blocks.input.focusedBorderColor = inputFocus;
+            }
+
+            // Dialog
+            const dialogTitle = getAccentHex('dialogTitleColor');
+            if (dialogTitle) {
+                blocks.dialog = { titleColor: dialogTitle };
+            }
+
+            // Text-Akzente
+            const headlineSmall = getAccentHex('headlineSmallColor');
+            const titleMedium = getAccentHex('titleMediumColor');
+            const bodyMedium = getAccentHex('bodyMediumColor');
+            if (headlineSmall || titleMedium || bodyMedium) {
+                blocks.textAccents = {};
+                if (headlineSmall) blocks.textAccents.headlineSmall = { color: headlineSmall };
+                if (titleMedium) blocks.textAccents.titleMedium = { color: titleMedium };
+                if (bodyMedium) blocks.textAccents.bodyMedium = { color: bodyMedium };
+            }
+
+            Object.assign(data, blocks);
+
+            return data;
+        }
+
+        function syntaxHighlight(json) {
+            return json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+                    function (match) {
+                        let cls = 'n';
+                        if (/^"/.test(match)) {
+                            cls = /:$/.test(match) ? 'k' : 's';
+                        } else if (/true|false/.test(match)) {
+                            cls = 'b';
+                        } else if (/null/.test(match)) {
+                            cls = 'b';
+                        }
+                        return '<span class="' + cls + '">' + match + '</span>';
+                    });
+        }
+
+        function updateJsonPreview() {
+            const data = buildThemeData();
+            const json = JSON.stringify(data, null, 2);
+            document.getElementById('jsonPreview').innerHTML = syntaxHighlight(json);
+        }
+
+        function downloadJSON() {
+            const data = buildThemeData();
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = data.id + '.json';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+            showToast('Theme heruntergeladen ✓');
+        }
+
+        function copyJSON() {
+            const data = buildThemeData();
+            const json = JSON.stringify(data, null, 2);
+            navigator.clipboard.writeText(json).then(() => {
+                showToast('JSON in Zwischenablage kopiert ✓');
+            }).catch(() => {
+                showToast('Fehler beim Kopieren', true);
+            });
+        }
+
+        function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    importTheme(data);
+                    showToast('Theme importiert ✓');
+                } catch (err) {
+                    showToast('Ungültige JSON-Datei', true);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = ''; // Reset input so the same file can be re-selected
+        }
+
+        function importTheme(data) {
+            if (data.displayName) document.getElementById('themeName').value = data.displayName;
+            if (data.emoji) document.getElementById('themeEmoji').value = data.emoji;
+            if (data.brightness) document.getElementById('brightness').value = data.brightness;
+            if (data.shelfStyle) document.getElementById('shelfStyle').value = data.shelfStyle;
+            if (typeof data.surfaceOverlayAlpha === 'number') {
+                document.getElementById('alphaSlider').value = data.surfaceOverlayAlpha;
+            }
+
+            if (data.materialColors) {
+                COLOR_DEFS.forEach(def => {
+                    const val = data.materialColors[def.id];
+                    if (val && /^#[0-9A-F]{6}$/i.test(val)) {
+                        document.getElementById(def.id + 'Color').value = val;
+                        document.getElementById(def.id + 'Hex').value = val.toUpperCase();
+                    }
+                });
+            }
+            if (data.shelfPalette) {
+                const map = {
+                    shelfBackground: data.shelfPalette.background,
+                    shelfPrimary: data.shelfPalette.primary,
+                    shelfLight: data.shelfPalette.light,
+                    shelfDark: data.shelfPalette.dark
+                };
+                Object.entries(map).forEach(([id, val]) => {
+                    if (val && /^#[0-9A-F]{6}$/i.test(val)) {
+                        document.getElementById(id + 'Color').value = val;
+                        document.getElementById(id + 'Hex').value = val.toUpperCase();
+                    }
+                });
+            }
+
+            // Akzent-Felder einlesen — alle optional, fehlende Felder
+            // werden geleert (kein Override).
+            const appBar = data.appBar || {};
+            const input = data.input || {};
+            const dialog = data.dialog || {};
+            const textAccents = data.textAccents || {};
+
+            setAccentHex('appBarTitleColor', appBar.titleColor || null);
+            setAccentHex('appBarIconColor', appBar.iconColor || null);
+            document.getElementById('appBarCenterTitle').checked = !!appBar.centerTitle;
+
+            const bottomBar = data.bottomBar || {};
+            setAccentHex('bottomBarColor', bottomBar.color || null);
+            setAccentHex('bottomBarIconColor', bottomBar.iconColor || null);
+            document.getElementById('bottomBarAlpha').value =
+                typeof bottomBar.alpha === 'number' ? bottomBar.alpha : 0.55;
+
+            setAccentHex('inputHintColor', input.hintColor || null);
+            setAccentHex('inputPrefixIconColor', input.prefixIconColor || null);
+            setAccentHex('inputFocusedBorderColor', input.focusedBorderColor || null);
+
+            setAccentHex('dialogTitleColor', dialog.titleColor || null);
+
+            setAccentHex('headlineSmallColor', textAccents.headlineSmall?.color || null);
+            setAccentHex('titleMediumColor', textAccents.titleMedium?.color || null);
+            setAccentHex('bodyMediumColor', textAccents.bodyMedium?.color || null);
+
+            // Auto-Modus auf Experte schalten, damit alle importierten Werte sichtbar sind
+            setColorMode('expert');
+            document.getElementById('presetSelector').value = 'custom';
+            updateAll();
+        }
+
+        // =========================================================
+        // TOAST
+        // =========================================================
+
+        let toastTimer = null;
+        function showToast(msg, isError = false) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.toggle('error', isError);
+            t.classList.add('show');
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+        }
+
+        // =========================================================
+        // MASTER UPDATE
+        // =========================================================
+
+        function updateAll() {
+            updatePreviewColors();
+            updateContrastWarnings();
+            updateJsonPreview();
+        }
+
+        // =========================================================
+        // INIT
+        // =========================================================
+
+        buildAllInputs();
+        setColorMode('basic');
+        setPreviewView('shelf');
+        updateAll();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+name: Website auf GitHub Pages veröffentlichen
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Aktualisiert die Neuheiten viermal täglich aus Supabase.
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v6
+
+      - name: PHP einrichten
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: curl
+          coverage: none
+
+      - name: PHP-Generator prüfen
+        run: php -l build/neuheiten.php
+
+      - name: Statische Website bauen
+        run: |
+          mkdir -p _site
+          cp -a public/. _site/
+          php build/neuheiten.php > _site/neuheiten.html
+          touch _site/.nojekyll
+          test -s _site/index.html
+          test -s _site/neuheiten.html
+
+      - name: GitHub Pages konfigurieren
+        uses: actions/configure-pages@v5
+
+      - name: Website-Artefakt hochladen
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - name: Website veröffentlichen
+        id: deployment
+        uses: actions/deploy-pages@v4
