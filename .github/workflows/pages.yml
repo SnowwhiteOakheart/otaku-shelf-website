@@ -21,11 +21,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Repository auschecken
@@ -58,6 +55,18 @@ jobs:
         with:
           path: _site
 
+  # Eigener Job: deploy-pages direkt nach dem Upload im selben Job fand das
+  # Artefakt sporadisch noch nicht ("Found 0 artifact(s)"), weil die
+  # Artefakt-API den Upload erst verzögert listet. Die Job-Grenze garantiert,
+  # dass das Artefakt registriert ist.
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Website veröffentlichen
         id: deployment
         uses: actions/deploy-pages@v4
