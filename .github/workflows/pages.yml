@@ -13,9 +13,6 @@ permissions:
   pages: write
   id-token: write
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -26,7 +23,7 @@ jobs:
 
     steps:
       - name: Repository auschecken
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: PHP einrichten
         uses: shivammathur/setup-php@v2
@@ -48,12 +45,14 @@ jobs:
           test -s _site/neuheiten.html
 
       - name: GitHub Pages konfigurieren
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Website-Artefakt hochladen
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: _site
+          # v5 laesst Punkt-Dateien sonst weg (.nojekyll, kuenftig z.B. .well-known/).
+          include-hidden-files: true
 
   # Eigener Job: deploy-pages direkt nach dem Upload im selben Job fand das
   # Artefakt sporadisch noch nicht ("Found 0 artifact(s)"), weil die
@@ -69,4 +68,4 @@ jobs:
     steps:
       - name: Website veröffentlichen
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
